@@ -1,0 +1,22 @@
+{
+  "name": "talabatkom-store",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Modern, clean, mobile-first storefront for \u0637\u0644\u0628\u0627\u062a\u0643\u0645 (Talabatkom) with WhatsApp checkout",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "next": "^14.2.5",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1"
+  },
+  "devDependencies": {
+    "autoprefixer": "^10.4.19",
+    "postcss": "^8.4.38",
+    "tailwindcss": "^3.4.4"
+  }
+}

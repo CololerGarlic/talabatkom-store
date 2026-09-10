@@ -1,0 +1,28 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html {
+    scroll-behavior: smooth;
+    -webkit-tap-highlight-color: transparent;
+  }
+  body {
+    @apply bg-slate-50 text-slate-900 antialiased selection:bg-brand-500 selection:text-white;
+    font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  }
+}
+
+/* Hide scrollbars while preserving touch scroll */
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Custom transitions and accessibility outlines */
+button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible {
+  @apply outline-none ring-2 ring-brand-600 ring-offset-2;
+}

@@ -1,0 +1,975 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl" class="light">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="referrer" content="no-referrer">
+  <title id="docTitle">طلباتكم | Talabatkom</title>
+  <meta name="description" content="تسوق أونلاين من متجر طلباتكم - بقالة الحارة. خضار، بهارات، مجمدات ومخبوزات مع توصيل سريع برسم 100 ليرة فقط.">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            brand: {
+              50: '#ecfdf5',
+              100: '#d1fae5',
+              500: '#10b981',
+              600: '#059669',
+              700: '#047857',
+              800: '#065f46',
+              900: '#064e3b',
+            }
+          },
+          fontFamily: {
+            sans: ['Cairo', 'Inter', 'system-ui', 'sans-serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .no-scrollbar::-webkit-scrollbar { display: none; }
+    .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+  </style>
+</head>
+<body class="bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 font-sans antialiased min-h-screen flex flex-col transition-colors duration-200">
+
+  <!-- Top Notification Bar -->
+  <div class="bg-brand-700 text-white text-xs sm:text-sm py-1.5 px-4 text-center font-medium">
+    <span id="t_notification">🚚 توصيل سريع لباب البيت | رسوم التوصيل: <strong class="underline underline-offset-2">100 ليرة</strong> فقط</span>
+  </div>
+
+  <!-- Header / Navbar with Language Switcher & Theme Toggle -->
+  <header class="sticky top-0 z-40 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 shadow-xs transition-colors">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-4">
+        
+        <!-- Logo & Store Name -->
+        <a href="#" onclick="selectCategory(null)" class="flex items-center gap-2.5 flex-shrink-0">
+          <div class="w-10 h-10 sm:w-12 sm:h-12 rounded-xl overflow-hidden bg-white border border-slate-200 dark:border-slate-700 shadow-xs flex items-center justify-center p-0.5">
+            <img src="https://lh3.googleusercontent.com/d/1mujANyzYrKkKgvH4jg5BU7cOKCzVTybB" alt="Logo" referrerpolicy="no-referrer" class="w-full h-full object-contain">
+          </div>
+          <div>
+            <span class="text-xl sm:text-2xl font-black text-slate-900 dark:text-white block leading-tight">
+              طلباتكم
+            </span>
+            <span id="t_tagline" class="text-[11px] sm:text-xs text-slate-500 dark:text-slate-400 hidden sm:block">Talabatkom - بقالة الحارة</span>
+          </div>
+        </a>
+
+        <!-- Search Bar -->
+        <div class="flex-1 max-w-md mx-1 sm:mx-2">
+          <div class="relative">
+            <input
+              id="searchInput"
+              type="text"
+              placeholder="ابحث عن منتج (أرز، بهارات، شاي، سمن...)"
+              class="w-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 rounded-full py-2 px-3 sm:px-4 pr-9 sm:pr-10 text-xs sm:text-sm text-slate-800 dark:text-slate-100 placeholder-slate-400 dark:placeholder-slate-500 focus:bg-white dark:focus:bg-slate-900 focus:border-brand-500 focus:ring-2 focus:ring-brand-200 dark:focus:ring-brand-900 transition-all"
+            />
+            <div class="absolute inset-y-0 right-0 pr-3 flex items-center pointer-events-none text-slate-400 dark:text-slate-500">
+              🔍
+            </div>
+          </div>
+        </div>
+
+        <!-- Controls: Language Selector, Theme Toggle, Cart -->
+        <div class="flex items-center gap-1.5 sm:gap-2.5 flex-shrink-0">
+          
+          <!-- Language Selector -->
+          <div class="relative">
+            <select
+              id="langSelector"
+              onchange="changeLanguage(this.value)"
+              class="bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 text-slate-800 dark:text-slate-100 text-xs sm:text-sm font-bold py-1.5 sm:py-2 px-2 sm:px-3 rounded-full cursor-pointer focus:outline-none focus:ring-2 focus:ring-brand-500 shadow-xs"
+              aria-label="Language Selector"
+            >
+              <option value="ar">🇸🇦 العربية</option>
+              <option value="en">🇬🇧 English</option>
+              <option value="tr">🇹🇷 Türkçe</option>
+            </select>
+          </div>
+
+          <!-- Theme Toggle Button -->
+          <button
+            id="themeToggleBtn"
+            onclick="toggleTheme()"
+            class="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-slate-100 dark:bg-slate-800 border border-slate-300 dark:border-slate-700 flex items-center justify-center text-slate-700 dark:text-amber-300 shadow-xs hover:bg-slate-200 dark:hover:bg-slate-700 transition-all text-sm sm:text-base active:scale-90"
+            title="تبديل الوضع الليلي / النهاري"
+            aria-label="Theme Toggle"
+          >
+            <span id="themeIcon">🌙</span>
+          </button>
+
+          <!-- Cart Button -->
+          <button
+            onclick="toggleCart(true)"
+            class="relative flex items-center gap-1.5 sm:gap-2 bg-brand-600 hover:bg-brand-700 active:scale-95 text-white px-3 sm:px-4 py-1.5 sm:py-2 rounded-full font-bold text-xs sm:text-sm shadow-md transition-all"
+          >
+            <span>🛒</span>
+            <span id="t_cart" class="hidden sm:inline">السلة</span>
+            <span id="cartCountBadge" class="hidden bg-amber-400 text-slate-900 px-1.5 sm:px-2 py-0.2 rounded-full text-xs font-bold">0</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Hero Welcome Banner with Custom Background and Logo -->
+  <div class="relative bg-slate-900 text-white py-8 sm:py-14 px-4 overflow-hidden bg-cover bg-center" style="background-image: url('https://lh3.googleusercontent.com/d/174ifZXjerNNuSd2Ao8z5iiZUWTvqr8fA');">
+    <div class="absolute inset-0 bg-slate-950/80 backdrop-blur-[1px]"></div>
+    <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
+      <div class="flex items-center gap-4 text-center md:text-right">
+        <div class="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl bg-white p-1.5 shadow-2xl border border-white/80 hidden sm:flex items-center justify-center flex-shrink-0">
+          <img src="https://lh3.googleusercontent.com/d/1mujANyzYrKkKgvH4jg5BU7cOKCzVTybB" alt="Logo" referrerpolicy="no-referrer" class="w-full h-full object-contain">
+        </div>
+        <div class="space-y-2 sm:space-y-3 max-w-2xl">
+          <div class="inline-flex items-center gap-2 bg-brand-600/80 border border-brand-400/50 px-3.5 py-1 rounded-full text-xs font-bold text-amber-300 shadow-sm">
+            <span id="t_heroBadge">🛵 خدمة توصيل سريعة وموثوقة</span>
+          </div>
+          <h1 id="t_heroTitle" class="text-2xl sm:text-4xl font-black tracking-tight leading-tight drop-shadow-md">
+            أهلاً بكم في متجر طلباتكم (Talabatkom)
+          </h1>
+          <p id="t_heroDesc" class="text-xs sm:text-base text-slate-200 leading-relaxed drop-shadow-sm">
+            جميع مستلزمات البيت من المواد الغذائية والمنتجات الطازجة، نجهز طلبك ونوصله لباب بيتك.
+          </p>
+          <div class="pt-1 flex flex-wrap items-center justify-center md:justify-start gap-2 text-xs">
+            <span class="bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/30 font-semibold shadow-xs">
+              <span id="t_deliveryFeeBadge">🚚 رسوم التوصيل: <strong class="text-amber-300">100 ليرة</strong></span>
+            </span>
+            <span class="bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/30 font-semibold shadow-xs">
+              <span id="t_codBadge">💵 الدفع عند الاستلام</span>
+            </span>
+            <span class="bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/30 font-semibold shadow-xs">
+              <span id="t_whatsappBadge">💬 تأكيد عبر واتساب</span>
+            </span>
+          </div>
+        </div>
+      </div>
+      <div class="flex-shrink-0">
+        <button onclick="toggleCart(true)" class="bg-amber-400 hover:bg-amber-300 active:scale-95 text-slate-900 font-extrabold text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-xl transition-all flex items-center gap-2">
+          <span>🛒</span>
+          <span id="t_viewCart">عرض السلة</span>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Categories Ribbon (Only Specific Categories, No 'الكل') -->
+  <div class="sticky top-16 sm:top-20 z-30 bg-white/95 dark:bg-slate-900/95 backdrop-blur-md border-b border-slate-200 dark:border-slate-800 py-3 shadow-xs transition-colors">
+    <div class="max-w-7xl mx-auto px-2 sm:px-4 relative flex items-center">
+      <button onclick="scrollRibbon('left')" class="hidden md:flex absolute right-1 z-10 w-8 h-8 rounded-full bg-white dark:bg-slate-800 shadow-md border border-slate-200 dark:border-slate-700 items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700">&#10095;</button>
+      <div id="ribbonContainer" class="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth px-2 sm:px-8 w-full select-none">
+        <!-- Injected via JS -->
+      </div>
+      <button onclick="scrollRibbon('right')" class="hidden md:flex absolute left-1 z-10 w-8 h-8 rounded-full bg-white dark:bg-slate-800 shadow-md border border-slate-200 dark:border-slate-700 items-center justify-center text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700">&#10094;</button>
+    </div>
+  </div>
+
+  <!-- Main View Area: Tidy Category Subdivisions OR Filtered View -->
+  <main class="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+    <div id="mainContent">
+      <!-- Injected via JS -->
+    </div>
+  </main>
+
+  <!-- Floating Mobile Cart Button -->
+  <div id="mobileFloatingCart" class="fixed bottom-4 left-4 right-4 z-40 sm:hidden hidden">
+    <button onclick="toggleCart(true)" class="w-full bg-[#25D366] text-white font-extrabold text-sm py-3 px-4 rounded-xl shadow-2xl flex items-center justify-between border-2 border-white">
+      <span class="flex items-center gap-2">
+        <span id="mobileCartCount" class="bg-white text-[#25D366] w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs">0</span>
+        <span id="t_mobileOrder">عرض السلة وتأكيد الطلب</span>
+      </span>
+      <span>WhatsApp &rarr;</span>
+    </button>
+  </div>
+
+  <!-- Cart Drawer -->
+  <div id="cartModal" class="fixed inset-0 z-50 overflow-hidden hidden">
+    <div onclick="toggleCart(false)" class="absolute inset-0 bg-slate-900/60 backdrop-blur-xs transition-opacity"></div>
+    <div class="fixed inset-y-0 left-0 max-w-full flex pl-0 sm:pl-10">
+      <div class="w-screen max-w-md bg-white dark:bg-slate-900 shadow-2xl flex flex-col border-r border-slate-200 dark:border-slate-800 transition-colors">
+        <!-- Cart Header -->
+        <div class="px-4 py-4 bg-slate-50 dark:bg-slate-800/80 border-b border-slate-200 dark:border-slate-700 flex items-center justify-between">
+          <div class="flex items-center gap-2">
+            <span class="text-xl">🛒</span>
+            <h2 id="t_cartTitle" class="text-base font-bold text-slate-900 dark:text-white">سلة المشتريات</h2>
+          </div>
+          <button onclick="toggleCart(false)" class="w-8 h-8 rounded-full bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600 flex items-center justify-center text-slate-600 dark:text-slate-300">✕</button>
+        </div>
+
+        <!-- Cart Items -->
+        <div id="cartItemsList" class="flex-1 overflow-y-auto p-4 space-y-3">
+          <!-- Injected via JS -->
+        </div>
+
+        <!-- Checkout Form & Pricing -->
+        <div id="cartFooter" class="bg-slate-50 dark:bg-slate-800/80 border-t border-slate-200 dark:border-slate-700 p-4 space-y-3">
+          <div class="space-y-2 text-xs text-slate-600 dark:text-slate-400">
+            <div class="flex justify-between">
+              <span id="t_subtotal">المجموع الفرعي:</span>
+              <span id="subtotalDisplay" class="font-bold text-slate-800 dark:text-white">0 TL</span>
+            </div>
+            <!-- 100 TL Delivery Fee clearly shown -->
+            <div class="flex justify-between items-center bg-amber-50 dark:bg-amber-950/40 text-amber-900 dark:text-amber-300 border border-amber-200 dark:border-amber-800/60 px-2 py-1.5 rounded-md font-semibold">
+              <span id="t_deliveryFee">🚚 رسوم التوصيل:</span>
+              <span class="font-extrabold text-brand-700 dark:text-brand-400">+100 TL</span>
+            </div>
+            <div class="flex justify-between text-sm font-extrabold text-slate-900 dark:text-white pt-1 border-t border-slate-200 dark:border-slate-700">
+              <span id="t_grandTotal">المجموع الكلي:</span>
+              <span id="grandTotalDisplay" class="text-base text-brand-700 dark:text-brand-400">0 TL</span>
+            </div>
+          </div>
+
+          <!-- Customer info -->
+          <div class="space-y-2 pt-2 border-t border-slate-200 dark:border-slate-700">
+            <input type="text" id="custName" placeholder="الاسم الكريم *" class="w-full text-xs p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-white" required>
+            <input type="tel" id="custPhone" placeholder="رقم الهاتف للتواصل *" class="w-full text-xs p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-white" required>
+            <input type="text" id="custAddress" placeholder="العنوان بالتفصيل (الحي، الشارع، البناء) *" class="w-full text-xs p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-white" required>
+            <input type="text" id="custNotes" placeholder="ملاحظات إضافية (اختياري)" class="w-full text-xs p-2 rounded-lg border border-slate-300 dark:border-slate-700 bg-white dark:bg-slate-800 dark:text-white">
+            <input type="text" id="honeypot" style="display:none" tabindex="-1" autocomplete="off">
+          </div>
+
+          <!-- WhatsApp Checkout CTA -->
+          <button
+            onclick="checkoutWhatsApp()"
+            class="w-full bg-[#25D366] hover:bg-[#20bd5a] text-white font-extrabold text-sm py-3 px-4 rounded-xl shadow-lg transition-all flex items-center justify-center gap-2"
+          >
+            <span id="t_confirmOrder">📱 تأكيد وإرسال الطلب عبر واتساب</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Cookie Consent Banner -->
+  <div id="cookieBanner" class="fixed bottom-4 left-4 right-4 sm:left-auto sm:right-6 sm:max-w-md z-50 bg-white dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-2xl shadow-2xl p-4 hidden">
+    <p class="text-xs text-slate-700 dark:text-slate-300 mb-2 leading-relaxed">
+      <span id="t_cookieNotice">🍪 نستخدم ملفات تعريف الارتباط الأساسية لحفظ سلة مشترياتك وتفضيلاتك وفقاً لـ KVKK.</span>{' '}
+      <button onclick="togglePrivacyModal(true)" class="text-brand-600 dark:text-brand-400 underline font-bold" id="t_readPrivacy">قراءة سياسة الخصوصية</button>
+    </p>
+    <div class="flex items-center gap-2">
+      <button onclick="dismissCookies()" class="bg-brand-600 text-white text-xs font-bold px-4 py-1.5 rounded-lg" id="t_accept">موافق</button>
+      <button onclick="dismissCookies()" class="bg-slate-100 dark:bg-slate-800 text-slate-600 dark:text-slate-400 text-xs px-3 py-1.5 rounded-lg" id="t_close">إغلاق</button>
+    </div>
+  </div>
+
+  <!-- Footer with Web Dev Banner & LinkedIn Credit -->
+  <footer class="bg-slate-900 text-slate-300 pt-12 pb-8 border-t border-slate-800 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      
+      <!-- Callout Banner: Web Development Services by Mohammadnour Hijazi -->
+      <div class="mb-10 bg-gradient-to-r from-slate-800 via-brand-950 to-slate-800 border border-slate-700 rounded-2xl p-6 sm:p-8 text-center shadow-xl">
+        <div class="max-w-xl mx-auto space-y-2.5">
+          <span class="text-3xl block">💻✨</span>
+          <h3 id="t_webDevTitle" class="text-base sm:text-lg font-extrabold text-white">
+            هل ترغب في إنشاء متجر أو موقع إلكتروني احترافي لعملك؟
+          </h3>
+          <p id="t_webDevDesc" class="text-xs text-slate-300 leading-relaxed">
+            Want a custom, modern, high-speed website or e-commerce store built for your business?
+          </p>
+          <div class="pt-2">
+            <a
+              href="https://www.linkedin.com/in/mohammadnour-hijazi-797967277"
+              target="_blank"
+              rel="noopener noreferrer"
+              class="inline-flex items-center gap-2 bg-brand-600 hover:bg-brand-500 active:scale-95 text-white font-bold text-xs sm:text-sm px-6 py-2.5 rounded-xl shadow-md transition-all"
+            >
+              <span id="t_webDevBtn">تواصل مع محمد نور حجازي | Contact Mohammad</span>
+              <span>&rarr;</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+      <!-- Links & Info -->
+      <div class="grid grid-cols-1 sm:grid-cols-3 gap-6 text-xs text-slate-400 text-center sm:text-right pb-8 border-b border-slate-800">
+        <div class="space-y-2">
+          <div class="w-12 h-12 mx-auto sm:mx-0 rounded-xl bg-white p-1 flex items-center justify-center border border-slate-700 overflow-hidden">
+            <img src="https://lh3.googleusercontent.com/d/1mujANyzYrKkKgvH4jg5BU7cOKCzVTybB" alt="Logo" referrerpolicy="no-referrer" class="w-full h-full object-contain">
+          </div>
+          <p class="font-bold text-white text-sm">طلباتكم - Talabatkom</p>
+          <p id="t_footerTagline">بقالة الحارة - طلباتك لباب بيتك | توصيل 100 ليرة فقط</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 id="t_contactTitle" class="font-bold text-white mb-2">التواصل وساعات العمل</h4>
+          <p id="t_hours">🕒 يومياً من 9:00 صباحاً حتى 11:00 مساءً</p>
+          <p id="t_address">📍 Büyükçekmece, İstanbul, Türkiye</p>
+          <p>📱 WhatsApp: +90 531 971 58 33</p>
+        </div>
+
+        <div class="space-y-1.5">
+          <h4 id="t_legalTitle" class="font-bold text-white mb-2">الروابط القانونية والخصوصية</h4>
+          <p>
+            <button onclick="togglePrivacyModal(true)" class="text-brand-400 hover:underline font-semibold flex items-center gap-1 mx-auto sm:mx-0">
+              <span>📄</span>
+              <span id="t_privacyLink">سياسة الخصوصية (Privacy Policy)</span>
+            </button>
+          </p>
+          <p class="text-slate-500">KVKK & GDPR Compliant</p>
+        </div>
+      </div>
+
+      <!-- Bottom Bar with LinkedIn attribution -->
+      <div class="pt-6 text-xs text-slate-400 flex flex-col sm:flex-row items-center justify-between gap-3 text-center sm:text-right">
+        <p>© 2026 Talabatkom. <span id="t_copyright">جميع الحقوق محفوظة.</span></p>
+        <div class="flex items-center gap-1.5 font-medium text-slate-300">
+          <span id="t_builtBy">Website built by</span>
+          <a
+            href="https://www.linkedin.com/in/mohammadnour-hijazi-797967277"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="text-brand-400 hover:text-brand-300 underline font-bold transition-colors"
+          >
+            Mohammadnour Hijazi
+          </a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Privacy Policy Modal for Instant Viewing -->
+  <div id="privacyModal" class="fixed inset-0 z-50 overflow-hidden hidden">
+    <div onclick="togglePrivacyModal(false)" class="absolute inset-0 bg-slate-900/60 backdrop-blur-xs"></div>
+    <div class="fixed inset-0 flex items-center justify-center p-4">
+      <div class="bg-white dark:bg-slate-900 rounded-2xl max-w-2xl w-full max-h-[85vh] overflow-y-auto p-6 sm:p-8 shadow-2xl space-y-4 relative text-right border border-slate-200 dark:border-slate-800 transition-colors">
+        <div class="flex items-center justify-between border-b border-slate-200 dark:border-slate-800 pb-3">
+          <h2 id="t_modalPrivacyTitle" class="text-lg sm:text-xl font-black text-slate-900 dark:text-white">📄 سياسة الخصوصية وحماية البيانات (KVKK)</h2>
+          <button onclick="togglePrivacyModal(false)" class="w-8 h-8 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 flex items-center justify-center text-slate-600 dark:text-slate-300 font-bold">✕</button>
+        </div>
+
+        <div id="t_modalPrivacyContent" class="space-y-3 text-xs sm:text-sm text-slate-700 dark:text-slate-300 leading-relaxed">
+          <h3 class="font-bold text-slate-900 dark:text-white">1. التزامنا بحماية الخصوصية</h3>
+          <p>نلتزم في متجر <strong>طلباتكم</strong> بأعلى معايير الأمان والشفافية في التعامل مع بياناتكم الشخصية وفقاً لقانون حماية البيانات الشخصية رقم 6698 (KVKK) في الجمهورية التركية.</p>
+
+          <h3 class="font-bold text-slate-900 dark:text-white">2. البيانات المطلوبة لإتمام طلب التوصيل</h3>
+          <p>عند إرسال طلب عبر السلة، يطلب منك فقط: الاسم، رقم الهاتف، وعنوان التوصيل. تستخدم هذه المعلومات حصرياً لتجهيز سلة مشترياتك وتوصيلها والتواصل المباشر معك عبر واتساب لتأكيد وصول المندوب وقيمة الفاتورة (شاملاً رسوم التوصيل 100 ليرة).</p>
+
+          <h3 class="font-bold text-slate-900 dark:text-white">3. عدم مشاركة البيانات</h3>
+          <p>نحن لا نشارك ولا نبيع أي معلومات شخصية تخصك لأي جهة إعلانية أو أطراف خارجية إطلاقاً.</p>
+
+          <h3 class="font-bold text-slate-900 dark:text-white">4. ملفات تعريف الارتباط (Cookies)</h3>
+          <p>يستخدم الموقع التخزين المحلي المؤقت في متصفحك فقط لحفظ محتويات سلتك وتفضيل اللغة والوضع المظلم.</p>
+        </div>
+
+        <div class="pt-4 border-t border-slate-200 dark:border-slate-800 text-center">
+          <button onclick="togglePrivacyModal(false)" class="bg-brand-600 hover:bg-brand-700 text-white text-xs font-bold px-6 py-2.5 rounded-xl" id="t_modalClose">
+            إغلاق ومتابعة التسوق
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- JAVASCRIPT LOGIC: TRANSLATIONS, DARK MODE, CART & PRODUCTS -->
+  <script>
+    const categories = [{"name": "العروض", "slug": "offers", "name_en": "Special Offers", "icon": "🔥", "col_name": 0, "col_price": 1, "is_sale": true, "name_tr": "Özel İndirimler"}, {"name": "البهارات", "slug": "spices", "name_en": "Spices & Seasonings", "icon": "🌶️", "col_name": 4, "col_price": 5, "is_sale": false, "name_tr": "Baharatlar & Çeşniler"}, {"name": "المعلبات", "slug": "canned-goods", "name_en": "Canned Goods & Oils", "icon": "🥫", "col_name": 9, "col_price": 10, "is_sale": false, "name_tr": "Konserveler & Yağlar"}, {"name": "مجففات وأعشاب", "slug": "dried-goods-herbs", "name_en": "Herbs, Teas & Grains", "icon": "🌿", "col_name": 14, "col_price": 15, "is_sale": false, "name_tr": "Bakliyat, Çay & Kuruyemiş"}, {"name": "المجمدات والألبان", "slug": "frozen-dairy", "name_en": "Frozen Foods & Dairy", "icon": "❄️", "col_name": 19, "col_price": 20, "is_sale": false, "name_tr": "Dondurulmuş & Süt Ürünleri"}, {"name": "المخبوزات والحلويات", "slug": "bakery-sweets", "name_en": "Bakery & Sweets", "icon": "🥖", "col_name": 24, "col_price": 25, "is_sale": false, "name_tr": "Fırın & Tatlılar"}];
+    const products = [{"id": "prod_1", "name": "مانجا عويص 1ك", "category": "العروض", "category_slug": "offers", "price": 100, "original_price": 125, "unit": "قطعة / كغ", "is_sale": true, "image": "https://lh3.googleusercontent.com/d/1DIunoOCa50FlfUpIFwF88Rlyhu9WRrNC", "in_stock": true, "original_photo_title": "مانجا عويص 1ك.jfif", "local_image": "images/مانجا عويص 1ك.jfif", "drive_id": "1DIunoOCa50FlfUpIFwF88Rlyhu9WRrNC", "drive_url": "https://lh3.googleusercontent.com/d/1DIunoOCa50FlfUpIFwF88Rlyhu9WRrNC", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1DIunoOCa50FlfUpIFwF88Rlyhu9WRrNC&sz=w600", "name_en": "Egyptian Owais Mango 1kg", "name_tr": "Mısır Uveys Mango 1kg"}, {"id": "prod_2", "name": "مانجا نعومي 1ك", "category": "العروض", "category_slug": "offers", "price": 200, "original_price": 250, "unit": "قطعة / كغ", "is_sale": true, "image": "https://lh3.googleusercontent.com/d/1_E0KbWayB2KtMbD7KhW6x7D_yA47H1LB", "in_stock": true, "original_photo_title": "مانجا نعومي 1ك.jfif", "local_image": "images/مانجا نعومي 1ك.jfif", "drive_id": "1_E0KbWayB2KtMbD7KhW6x7D_yA47H1LB", "drive_url": "https://lh3.googleusercontent.com/d/1_E0KbWayB2KtMbD7KhW6x7D_yA47H1LB", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1_E0KbWayB2KtMbD7KhW6x7D_yA47H1LB&sz=w600", "name_en": "Egyptian Naomi Mango 1kg", "name_tr": "Mısır Naomi Mango 1kg"}, {"id": "prod_3", "name": "رطب سكري 1ك", "category": "العروض", "category_slug": "offers", "price": 230, "original_price": 287, "unit": "قطعة / كغ", "is_sale": true, "image": "https://lh3.googleusercontent.com/d/1OLmOD1VVUpS07YYC_w8qeJkrfeocAflM", "in_stock": true, "original_photo_title": "رطب سكري 1ك.jfif", "local_image": "images/رطب سكري 1ك.jfif", "drive_id": "1OLmOD1VVUpS07YYC_w8qeJkrfeocAflM", "drive_url": "https://lh3.googleusercontent.com/d/1OLmOD1VVUpS07YYC_w8qeJkrfeocAflM", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1OLmOD1VVUpS07YYC_w8qeJkrfeocAflM&sz=w600", "name_en": "Fresh Sukkari Dates 1kg", "name_tr": "Taze Sukkari Hurma 1kg"}, {"id": "prod_4", "name": "أندومي كوري Buldak", "category": "العروض", "category_slug": "offers", "price": 125, "original_price": 156, "unit": "قطعة / كغ", "is_sale": true, "image": "https://lh3.googleusercontent.com/d/1iItP0Mzgahs7NOfMaQJdDhw9Dg7zQyWF", "in_stock": true, "original_photo_title": "أندومي كوري Buldak.jfif", "local_image": "images/أندومي كوري Buldak.jfif", "drive_id": "1iItP0Mzgahs7NOfMaQJdDhw9Dg7zQyWF", "drive_url": "https://lh3.googleusercontent.com/d/1iItP0Mzgahs7NOfMaQJdDhw9Dg7zQyWF", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1iItP0Mzgahs7NOfMaQJdDhw9Dg7zQyWF&sz=w600", "name_en": "Samyang Buldak Korean Ramen", "name_tr": "Samyang Buldak Acılı Kore Rameni"}, {"id": "prod_5", "name": "مياه معدنية çoban 5 L", "category": "العروض", "category_slug": "offers", "price": 40, "original_price": 50, "unit": "قطعة / كغ", "is_sale": true, "image": "https://lh3.googleusercontent.com/d/1dkkMKaOanJMd2ccR7WtCyU5LgyMwwZi-", "in_stock": true, "original_photo_title": "مياه معدنية çoban 5 L.png", "local_image": "images/مياه معدنية çoban 5 L.png", "drive_id": "1dkkMKaOanJMd2ccR7WtCyU5LgyMwwZi-", "drive_url": "https://lh3.googleusercontent.com/d/1dkkMKaOanJMd2ccR7WtCyU5LgyMwwZi-", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1dkkMKaOanJMd2ccR7WtCyU5LgyMwwZi-&sz=w600", "name_en": "Çoban Natural Mineral Water 5L", "name_tr": "Çoban Doğal Kaynak Suyu 5L"}, {"id": "prod_6", "name": "قشطة قيمر 4 حبات", "category": "العروض", "category_slug": "offers", "price": 160, "original_price": 200, "unit": "قطعة / كغ", "is_sale": true, "image": "https://lh3.googleusercontent.com/d/1tngrO0HkkZBdFLBi_rfry_gTWYvwZrfN", "in_stock": true, "original_photo_title": "قشطة قيمر 4 حبات.jfif", "local_image": "images/قشطة قيمر 4 حبات.jfif", "drive_id": "1tngrO0HkkZBdFLBi_rfry_gTWYvwZrfN", "drive_url": "https://lh3.googleusercontent.com/d/1tngrO0HkkZBdFLBi_rfry_gTWYvwZrfN", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1tngrO0HkkZBdFLBi_rfry_gTWYvwZrfN&sz=w600", "name_en": "Geymar Cream (Pack of 4)", "name_tr": "Geymar Kaymak 4'lü Paket"}, {"id": "prod_7", "name": "سكري مفتل صندوق 3ك", "category": "العروض", "category_slug": "offers", "price": 850, "original_price": 1062, "unit": "قطعة / كغ", "is_sale": true, "image": "https://lh3.googleusercontent.com/d/1uvRJqxFHE4Q-ATX4Rz1Tv8zmJ23pqJKF", "in_stock": true, "original_photo_title": "سكري مفتل صندوق 3ك.webp", "local_image": "images/سكري مفتل صندوق 3ك.webp", "drive_id": "1uvRJqxFHE4Q-ATX4Rz1Tv8zmJ23pqJKF", "drive_url": "https://lh3.googleusercontent.com/d/1uvRJqxFHE4Q-ATX4Rz1Tv8zmJ23pqJKF", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1uvRJqxFHE4Q-ATX4Rz1Tv8zmJ23pqJKF&sz=w600", "name_en": "Premium Sukkari Dates Box 3kg", "name_tr": "Özel Sukkari Hurma Kutusu 3kg"}, {"id": "prod_8", "name": "خبز سوري ربطه", "category": "العروض", "category_slug": "offers", "price": 15, "original_price": 18, "unit": "قطعة / كغ", "is_sale": true, "image": "https://lh3.googleusercontent.com/d/1hSZgl0NoNRgHSeiVNoEUIFuZWMUiJr4k", "in_stock": true, "original_photo_title": "خبز سوري ربطه.webp", "local_image": "images/خبز سوري ربطه.webp", "drive_id": "1hSZgl0NoNRgHSeiVNoEUIFuZWMUiJr4k", "drive_url": "https://lh3.googleusercontent.com/d/1hSZgl0NoNRgHSeiVNoEUIFuZWMUiJr4k", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1hSZgl0NoNRgHSeiVNoEUIFuZWMUiJr4k&sz=w600", "name_en": "Syrian Flatbread (Pack)", "name_tr": "Taze Suriye Ekmeği Paketi"}, {"id": "prod_9", "name": "بلح برحي 1ك", "category": "العروض", "category_slug": "offers", "price": 180, "original_price": 225, "unit": "قطعة / كغ", "is_sale": true, "image": "https://lh3.googleusercontent.com/d/13Uwec44Pj8YXIXGD42YyNBBwQLjyIXRE", "in_stock": true, "original_photo_title": "بلح برحي 1ك.png", "local_image": "images/بلح برحي 1ك.png", "drive_id": "13Uwec44Pj8YXIXGD42YyNBBwQLjyIXRE", "drive_url": "https://lh3.googleusercontent.com/d/13Uwec44Pj8YXIXGD42YyNBBwQLjyIXRE", "drive_thumb_url": "https://drive.google.com/thumbnail?id=13Uwec44Pj8YXIXGD42YyNBBwQLjyIXRE&sz=w600", "name_en": "Fresh Barhi Yellow Dates 1kg", "name_tr": "Taze Sarı Barhi Hurma 1kg"}, {"id": "prod_10", "name": "فول ROZ 4 حبات", "category": "العروض", "category_slug": "offers", "price": 100, "original_price": 125, "unit": "قطعة / كغ", "is_sale": true, "image": "https://lh3.googleusercontent.com/d/140JVQy8CBF-Op8l3tVyu2OqT7TA-dO-2", "in_stock": true, "original_photo_title": "فول Roz 400g.PNG", "local_image": "images/فول Roz 400g.PNG", "drive_id": "140JVQy8CBF-Op8l3tVyu2OqT7TA-dO-2", "drive_url": "https://lh3.googleusercontent.com/d/140JVQy8CBF-Op8l3tVyu2OqT7TA-dO-2", "drive_thumb_url": "https://drive.google.com/thumbnail?id=140JVQy8CBF-Op8l3tVyu2OqT7TA-dO-2&sz=w600", "name_en": "ROZ Cooked Fava Beans (4 Cans)", "name_tr": "ROZ Konserve Bakla (4 Kutu)"}, {"id": "prod_11", "name": "منديل ورقي الوزير 200غم", "category": "العروض", "category_slug": "offers", "price": 35, "original_price": 43, "unit": "قطعة / كغ", "is_sale": true, "image": "https://lh3.googleusercontent.com/d/1TR_vrUNQ_synaQZEJgFtufXY91gZeXvy", "in_stock": true, "original_photo_title": "منديل ورقي الوزير 200غم.jfif", "local_image": "images/منديل ورقي الوزير 200غم.jfif", "drive_id": "1TR_vrUNQ_synaQZEJgFtufXY91gZeXvy", "drive_url": "https://lh3.googleusercontent.com/d/1TR_vrUNQ_synaQZEJgFtufXY91gZeXvy", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1TR_vrUNQ_synaQZEJgFtufXY91gZeXvy&sz=w600", "name_en": "Al-Wazir Facial Tissues 200g", "name_tr": "Al-Wazir Kağıt Mendil 200g"}, {"id": "prod_12", "name": "منديل ورقي الوزير 500غم", "category": "العروض", "category_slug": "offers", "price": 75, "original_price": 93, "unit": "قطعة / كغ", "is_sale": true, "image": "https://lh3.googleusercontent.com/d/1cV0lY4nw6YhsOVlmk65ZmiHw_tJkXzG4", "in_stock": true, "original_photo_title": "منديل ورقي الوزير 500غم.jfif", "local_image": "images/منديل ورقي الوزير 500غم.jfif", "drive_id": "1cV0lY4nw6YhsOVlmk65ZmiHw_tJkXzG4", "drive_url": "https://lh3.googleusercontent.com/d/1cV0lY4nw6YhsOVlmk65ZmiHw_tJkXzG4", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1cV0lY4nw6YhsOVlmk65ZmiHw_tJkXzG4&sz=w600", "name_en": "Al-Wazir Facial Tissues 500g", "name_tr": "Al-Wazir Kağıt Mendil 500g"}, {"id": "prod_13", "name": "قرفه مطحونه 100غم", "category": "البهارات", "category_slug": "spices", "price": 50, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1IiCM7bNWm-oAkTNykICRD5iJzfBUKNrv", "in_stock": true, "original_photo_title": "قرفه مطحونه 100غم.jfif", "local_image": "images/قرفه مطحونه 100غم.jfif", "drive_id": "1IiCM7bNWm-oAkTNykICRD5iJzfBUKNrv", "drive_url": "https://lh3.googleusercontent.com/d/1IiCM7bNWm-oAkTNykICRD5iJzfBUKNrv", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1IiCM7bNWm-oAkTNykICRD5iJzfBUKNrv&sz=w600", "name_en": "Ground Pure Cinnamon 100g", "name_tr": "Öğütülmüş Toz Tarçın 100g"}, {"id": "prod_14", "name": "قرفه عيدان 100غم", "category": "البهارات", "category_slug": "spices", "price": 55, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1aEdVOOPf-at18-Vi77gcMJ_B7gIabdlw", "in_stock": true, "original_photo_title": "قرفه عيدان 100غم.jfif", "local_image": "images/قرفه عيدان 100غم.jfif", "drive_id": "1aEdVOOPf-at18-Vi77gcMJ_B7gIabdlw", "drive_url": "https://lh3.googleusercontent.com/d/1aEdVOOPf-at18-Vi77gcMJ_B7gIabdlw", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1aEdVOOPf-at18-Vi77gcMJ_B7gIabdlw&sz=w600", "name_en": "Natural Cinnamon Sticks 100g", "name_tr": "Doğal Çubuk Tarçın 100g"}, {"id": "prod_15", "name": "فلفل حار 100غم", "category": "البهارات", "category_slug": "spices", "price": 35, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1kXsX8cWoIrMwau88Icj13a6bIAkQ4JzQ", "in_stock": true, "original_photo_title": "فلفل حار 100غم.jfif", "local_image": "images/فلفل حار 100غم.jfif", "drive_id": "1kXsX8cWoIrMwau88Icj13a6bIAkQ4JzQ", "drive_url": "https://lh3.googleusercontent.com/d/1kXsX8cWoIrMwau88Icj13a6bIAkQ4JzQ", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1kXsX8cWoIrMwau88Icj13a6bIAkQ4JzQ&sz=w600", "name_en": "Hot Chili Pepper Powder 100g", "name_tr": "Acı Toz Kırmızı Biber 100g"}, {"id": "prod_16", "name": "فلفل حلو 100غم", "category": "البهارات", "category_slug": "spices", "price": 35, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/18-DszWcmKCDtMfirjM2BsEAyj4t1Uc9T", "in_stock": true, "original_photo_title": "فلفل حلو 100غم.jfif", "local_image": "images/فلفل حلو 100غم.jfif", "drive_id": "18-DszWcmKCDtMfirjM2BsEAyj4t1Uc9T", "drive_url": "https://lh3.googleusercontent.com/d/18-DszWcmKCDtMfirjM2BsEAyj4t1Uc9T", "drive_thumb_url": "https://drive.google.com/thumbnail?id=18-DszWcmKCDtMfirjM2BsEAyj4t1Uc9T&sz=w600", "name_en": "Sweet Paprika Powder 100g", "name_tr": "Tatlı Toz Kırmızı Biber 100g"}, {"id": "prod_17", "name": "فلفل اسود مطحون 100غم", "category": "البهارات", "category_slug": "spices", "price": 65, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/19dIzCiObj-IFCF2cLCdVz9BOriv3Iv8v", "in_stock": true, "original_photo_title": "فلفل اسود مطحون 100غم.jfif", "local_image": "images/فلفل اسود مطحون 100غم.jfif", "drive_id": "19dIzCiObj-IFCF2cLCdVz9BOriv3Iv8v", "drive_url": "https://lh3.googleusercontent.com/d/19dIzCiObj-IFCF2cLCdVz9BOriv3Iv8v", "drive_thumb_url": "https://drive.google.com/thumbnail?id=19dIzCiObj-IFCF2cLCdVz9BOriv3Iv8v&sz=w600", "name_en": "Ground Black Pepper 100g", "name_tr": "Öğütülmüş Taze Karabiber 100g"}, {"id": "prod_18", "name": "فلفل اسود حب 100غم", "category": "البهارات", "category_slug": "spices", "price": 70, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1M21lZl5PEPhUw8BWHOp9fcsT5P6_I_dO", "in_stock": true, "original_photo_title": "فلفل اسود حب 100غم.jfif", "local_image": "images/فلفل اسود حب 100غم.jfif", "drive_id": "1M21lZl5PEPhUw8BWHOp9fcsT5P6_I_dO", "drive_url": "https://lh3.googleusercontent.com/d/1M21lZl5PEPhUw8BWHOp9fcsT5P6_I_dO", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1M21lZl5PEPhUw8BWHOp9fcsT5P6_I_dO&sz=w600", "name_en": "Whole Black Peppercorns 100g", "name_tr": "Tane Siyah Karabiber 100g"}, {"id": "prod_19", "name": "باربيكا حار 100غم", "category": "البهارات", "category_slug": "spices", "price": 35, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1S8wOmYQjNIBP0bCULj-sbShdtGyyz2Wx", "in_stock": true, "original_photo_title": "باربيكا حار 100غم.jfif", "local_image": "images/باربيكا حار 100غم.jfif", "drive_id": "1S8wOmYQjNIBP0bCULj-sbShdtGyyz2Wx", "drive_url": "https://lh3.googleusercontent.com/d/1S8wOmYQjNIBP0bCULj-sbShdtGyyz2Wx", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1S8wOmYQjNIBP0bCULj-sbShdtGyyz2Wx&sz=w600", "name_en": "Hot Paprika Powder 100g", "name_tr": "Acı Toz Biber 100g"}, {"id": "prod_20", "name": "باربيكا حلو 100غم", "category": "البهارات", "category_slug": "spices", "price": 35, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1DwDIy4zCoRkJRgTjXIOHLMtu6gzDyf5O", "in_stock": true, "original_photo_title": "باربيكا حلو 100غم.jfif", "local_image": "images/باربيكا حلو 100غم.jfif", "drive_id": "1DwDIy4zCoRkJRgTjXIOHLMtu6gzDyf5O", "drive_url": "https://lh3.googleusercontent.com/d/1DwDIy4zCoRkJRgTjXIOHLMtu6gzDyf5O", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1DwDIy4zCoRkJRgTjXIOHLMtu6gzDyf5O&sz=w600", "name_en": "Sweet Red Paprika 100g", "name_tr": "Tatlı Toz Kırmızı Biber 100g"}, {"id": "prod_21", "name": "سماق 100غم", "category": "البهارات", "category_slug": "spices", "price": 60, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Pure Ground Sumac 100g", "name_tr": "Hakiki Tane / Toz Sumak 100g"}, {"id": "prod_22", "name": "كمون 100غم", "category": "البهارات", "category_slug": "spices", "price": 35, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Ground Pure Cumin 100g", "name_tr": "Öğütülmüş Doğal Kimyon 100g"}, {"id": "prod_23", "name": "كزبرة حب 100غم", "category": "البهارات", "category_slug": "spices", "price": 25, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Whole Coriander Seeds 100g", "name_tr": "Tane Kişniş Tohumu 100g"}, {"id": "prod_24", "name": "كزبرة مطحون 100غم", "category": "البهارات", "category_slug": "spices", "price": 25, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Ground Coriander Powder 100g", "name_tr": "Öğütülmüş Toz Kişniş 100g"}, {"id": "prod_25", "name": "قرنفل 100غم", "category": "البهارات", "category_slug": "spices", "price": 80, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Whole Aromatic Cloves 100g", "name_tr": "Doğal Tane Karanfil 100g"}, {"id": "prod_26", "name": "سبع بهارات 100غم", "category": "البهارات", "category_slug": "spices", "price": 55, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Traditional Seven Spices 100g", "name_tr": "Geleneksel Yedi Türlü Baharat 100g"}, {"id": "prod_27", "name": "سمسم ابيض 100غم", "category": "البهارات", "category_slug": "spices", "price": 30, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Raw White Sesame Seeds 100g", "name_tr": "Çiğ Beyaz Susam 100g"}, {"id": "prod_28", "name": "سمسم اصفر 100غم", "category": "البهارات", "category_slug": "spices", "price": 35, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Yellow Sesame Seeds 100g", "name_tr": "Doğal Sarı Susam 100g"}, {"id": "prod_29", "name": "سمسم محمص 100غم", "category": "البهارات", "category_slug": "spices", "price": 35, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Roasted Sesame Seeds 100g", "name_tr": "Kavrulmuş Susam 100g"}, {"id": "prod_30", "name": "حبة البركة 100غم", "category": "البهارات", "category_slug": "spices", "price": 35, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Black Nigella Seeds 100g", "name_tr": "Doğal Çörek Otu 100g"}, {"id": "prod_31", "name": "لوز نصاص 100غم", "category": "البهارات", "category_slug": "spices", "price": 80, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Halved Peeled Almonds 100g", "name_tr": "Yarım Soyulmuş Badem İçi 100g"}, {"id": "prod_32", "name": "لوز إرباع 100غم", "category": "البهارات", "category_slug": "spices", "price": 80, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Quartered Almonds 100g", "name_tr": "Kırık Badem İçi 100g"}, {"id": "prod_33", "name": "جوزهند 100غم", "category": "البهارات", "category_slug": "spices", "price": 45, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Shredded Dried Coconut 100g", "name_tr": "Rendelenmiş Hindistan Cevizi 100g"}, {"id": "prod_34", "name": "حلبة 100غم", "category": "البهارات", "category_slug": "spices", "price": 25, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Fenugreek Seeds 100g", "name_tr": "Doğal Çemen Otu Tohumu 100g"}, {"id": "prod_35", "name": "عصفر 100غم", "category": "البهارات", "category_slug": "spices", "price": 80, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Safflower / Asfour 100g", "name_tr": "Doğal Aspir (Yalancı Safran) 100g"}, {"id": "prod_36", "name": "لومي 100غم", "category": "البهارات", "category_slug": "spices", "price": 30, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Dried Black Lime (Loomi) 100g", "name_tr": "Kuru Siyah Limon (Lumi) 100g"}, {"id": "prod_37", "name": "نعناع ناشف 100غم", "category": "البهارات", "category_slug": "spices", "price": 28, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Crushed Dried Mint 100g", "name_tr": "Kurutulmuş Nane Yaprağı 100g"}, {"id": "prod_38", "name": "زنجبيل مطحون 100غم", "category": "البهارات", "category_slug": "spices", "price": 38, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Ground Ginger Powder 100g", "name_tr": "Öğütülmüş Toz Zencefil 100g"}, {"id": "prod_39", "name": "محلب ناعم 100غم", "category": "البهارات", "category_slug": "spices", "price": 210, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Fine Mahlab Powder 100g", "name_tr": "İnce Öğütülmüş Mahlep 100g"}, {"id": "prod_40", "name": "يانسون 100غم", "category": "البهارات", "category_slug": "spices", "price": 35, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Pure Anise Seeds 100g", "name_tr": "Doğal Tane Anason 100g"}, {"id": "prod_41", "name": "يانسون نجمه 100غم", "category": "البهارات", "category_slug": "spices", "price": 95, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Whole Star Anise 100g", "name_tr": "Yıldız Anason 100g"}, {"id": "prod_42", "name": "كراوية حب 100غم", "category": "البهارات", "category_slug": "spices", "price": 35, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Whole Caraway Seeds 100g", "name_tr": "Tane Frenk Kimyonu (Karaviye) 100g"}, {"id": "prod_43", "name": "كراوية مطحون 100غم", "category": "البهارات", "category_slug": "spices", "price": 35, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Ground Caraway Powder 100g", "name_tr": "Öğütülmüş Frenk Kimyonu 100g"}, {"id": "prod_44", "name": "مردغوش 100غم", "category": "البهارات", "category_slug": "spices", "price": 25, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Dried Wild Marjoram 100g", "name_tr": "Kurutulmuş Mercanköşk 100g"}, {"id": "prod_45", "name": "كركده 100غم", "category": "البهارات", "category_slug": "spices", "price": 50, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Hibiscus Flowers (Karkadeh) 100g", "name_tr": "Doğal Kırmızı Hibiskus (Kerkede) 100g"}, {"id": "prod_46", "name": "بزر كتان 100غم", "category": "البهارات", "category_slug": "spices", "price": 20, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Brown Flax Seeds 100g", "name_tr": "Kahverengi Keten Tohumu 100g"}, {"id": "prod_47", "name": "بزر شيا 100غم", "category": "البهارات", "category_slug": "spices", "price": 35, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Natural Chia Seeds 100g", "name_tr": "Doğal Chia Tohumu 100g"}, {"id": "prod_48", "name": "بزر رشاد 100غم", "category": "البهارات", "category_slug": "spices", "price": 50, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Garden Cress Seeds 100g", "name_tr": "Doğal Tere Tohumu 100g"}, {"id": "prod_49", "name": "جوزة الطيب 100غم", "category": "البهارات", "category_slug": "spices", "price": 90, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Whole Nutmeg 100g", "name_tr": "Tane Muskat Cevizi 100g"}, {"id": "prod_50", "name": "كاسترد kent 300g", "category": "المعلبات", "category_slug": "canned-goods", "price": 110, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1fM5XkipoG_jL6w2tHNWYrjIS-iL0nN9-", "in_stock": true, "original_photo_title": "كاسترد kent 300g.jfif", "local_image": "images/كاسترد kent 300g.jfif", "drive_id": "1fM5XkipoG_jL6w2tHNWYrjIS-iL0nN9-", "drive_url": "https://lh3.googleusercontent.com/d/1fM5XkipoG_jL6w2tHNWYrjIS-iL0nN9-", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1fM5XkipoG_jL6w2tHNWYrjIS-iL0nN9-&sz=w600", "name_en": "Kent Custard Powder 300g", "name_tr": "Kent Kremalı Kastard Tozu 300g"}, {"id": "prod_51", "name": "مرتديلا هنا 200g", "category": "المعلبات", "category_slug": "canned-goods", "price": 45, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/198EzcST4Fx9JusxA2dJVH6W_d8KLKdFy", "in_stock": true, "original_photo_title": "مرتديلا هنا  200g.jfif", "local_image": "images/مرتديلا هنا  200g.jfif", "drive_id": "198EzcST4Fx9JusxA2dJVH6W_d8KLKdFy", "drive_url": "https://lh3.googleusercontent.com/d/198EzcST4Fx9JusxA2dJVH6W_d8KLKdFy", "drive_thumb_url": "https://drive.google.com/thumbnail?id=198EzcST4Fx9JusxA2dJVH6W_d8KLKdFy&sz=w600", "name_en": "Hana Beef Mortadella 200g", "name_tr": "Hana Dana Mortadella 200g"}, {"id": "prod_52", "name": "مرتديلا هنا 380g", "category": "المعلبات", "category_slug": "canned-goods", "price": 80, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1-0udj3AsAqfI6BqYdrxAAuvqeEN2VTqw", "in_stock": true, "original_photo_title": "مرتديلا هنا  380g.webp", "local_image": "images/مرتديلا هنا  380g.webp", "drive_id": "1-0udj3AsAqfI6BqYdrxAAuvqeEN2VTqw", "drive_url": "https://lh3.googleusercontent.com/d/1-0udj3AsAqfI6BqYdrxAAuvqeEN2VTqw", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1-0udj3AsAqfI6BqYdrxAAuvqeEN2VTqw&sz=w600", "name_en": "Hana Beef Mortadella 380g", "name_tr": "Hana Dana Mortadella 380g"}, {"id": "prod_53", "name": "مرتديلا هنا 830g", "category": "المعلبات", "category_slug": "canned-goods", "price": 150, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1XcD58kQDvNyurowQFdRmk5XYSuTvHnln", "in_stock": true, "original_photo_title": "مرتديلا هنا  830g.avif", "local_image": "images/مرتديلا هنا  380g.webp", "drive_id": "1XcD58kQDvNyurowQFdRmk5XYSuTvHnln", "drive_url": "https://lh3.googleusercontent.com/d/1-0udj3AsAqfI6BqYdrxAAuvqeEN2VTqw", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1-0udj3AsAqfI6BqYdrxAAuvqeEN2VTqw&sz=w600", "name_en": "Hana Beef Mortadella 830g", "name_tr": "Hana Dana Mortadella 830g"}, {"id": "prod_54", "name": "بلوبيف Bordon 320g", "category": "المعلبات", "category_slug": "canned-goods", "price": 200, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1vQln_vkrIJlfZktpETj39NIgziwbE52q", "in_stock": true, "original_photo_title": "بلوبيف Bordon 320g.webp", "local_image": "images/بلوبيف Bordon 320g.webp", "drive_id": "1vQln_vkrIJlfZktpETj39NIgziwbE52q", "drive_url": "https://lh3.googleusercontent.com/d/1vQln_vkrIJlfZktpETj39NIgziwbE52q", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1vQln_vkrIJlfZktpETj39NIgziwbE52q&sz=w600", "name_en": "Bordon Corned Beef 320g", "name_tr": "Bordon Konserve Dana Eti (Corned Beef) 320g"}, {"id": "prod_55", "name": "سردين حار Joly 125g", "category": "المعلبات", "category_slug": "canned-goods", "price": 90, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1gsQbjRA6Gsmjt6ZamVBRcDVNS_D3rrkF", "in_stock": true, "original_photo_title": "سردين حار  Joly 125g.jfif", "local_image": "images/سردين حار  Joly 125g.jfif", "drive_id": "1gsQbjRA6Gsmjt6ZamVBRcDVNS_D3rrkF", "drive_url": "https://lh3.googleusercontent.com/d/1gsQbjRA6Gsmjt6ZamVBRcDVNS_D3rrkF", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1gsQbjRA6Gsmjt6ZamVBRcDVNS_D3rrkF&sz=w600", "name_en": "Joly Hot Sardines in Oil 125g", "name_tr": "Joly Acılı Sardalye Konservesi 125g"}, {"id": "prod_56", "name": "سردين جوري حار 125g", "category": "المعلبات", "category_slug": "canned-goods", "price": 90, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Jouri Hot Sardines 125g", "name_tr": "Jouri Acı Soslu Sardalye 125g"}, {"id": "prod_57", "name": "سردين دردنيل حار 125g", "category": "المعلبات", "category_slug": "canned-goods", "price": 90, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1MiJkxbft634cSSieKAxrNszq3Jy3Tgrs", "in_stock": true, "original_photo_title": "سردين دردنيل حار  125g.webp", "local_image": "images/سردين دردنيل حار  125g.webp", "drive_id": "1MiJkxbft634cSSieKAxrNszq3Jy3Tgrs", "drive_url": "https://lh3.googleusercontent.com/d/1MiJkxbft634cSSieKAxrNszq3Jy3Tgrs", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1MiJkxbft634cSSieKAxrNszq3Jy3Tgrs&sz=w600", "name_en": "Dardanel Spicy Sardines 125g", "name_tr": "Dardanel Acılı Sardalye 125g"}, {"id": "prod_58", "name": "سردين هنا حار 125g", "category": "المعلبات", "category_slug": "canned-goods", "price": 90, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1qHAApHkots7wmLMl7F6dMIMiMlKcnzrR", "in_stock": true, "original_photo_title": "سردين هنا حار  125g.jfif", "local_image": "images/سردين هنا حار  125g.jfif", "drive_id": "1qHAApHkots7wmLMl7F6dMIMiMlKcnzrR", "drive_url": "https://lh3.googleusercontent.com/d/1qHAApHkots7wmLMl7F6dMIMiMlKcnzrR", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1qHAApHkots7wmLMl7F6dMIMiMlKcnzrR&sz=w600", "name_en": "Hana Hot Sardines 125g", "name_tr": "Hana Acılı Sardalye Konservesi 125g"}, {"id": "prod_59", "name": "تونا Tonsa حار 200g", "category": "المعلبات", "category_slug": "canned-goods", "price": 65, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Tonsa Spicy Canned Tuna 200g", "name_tr": "Tonsa Acılı Ton Balığı Konservesi 200g"}, {"id": "prod_60", "name": "تونا Sasu 200g", "category": "المعلبات", "category_slug": "canned-goods", "price": 65, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Sasu Solid Light Tuna 200g", "name_tr": "Sasu Parça Ton Balığı 200g"}, {"id": "prod_61", "name": "أناناس Hera 850g", "category": "المعلبات", "category_slug": "canned-goods", "price": 250, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1qSFXB8qvzZ6Mf-p7kaQvGlrrB3aiqPps", "in_stock": true, "original_photo_title": "أناناس Hera 850g.webp", "local_image": "images/أناناس Hera 850g.webp", "drive_id": "1qSFXB8qvzZ6Mf-p7kaQvGlrrB3aiqPps", "drive_url": "https://lh3.googleusercontent.com/d/1qSFXB8qvzZ6Mf-p7kaQvGlrrB3aiqPps", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1qSFXB8qvzZ6Mf-p7kaQvGlrrB3aiqPps&sz=w600", "name_en": "Hera Sliced Pineapple in Syrup 850g", "name_tr": "Hera Dilim Ananas Konservesi 850g"}, {"id": "prod_62", "name": "أناناس Primera 850g", "category": "المعلبات", "category_slug": "canned-goods", "price": 220, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1Up3WRy5XubvB608RrW70XOee2iit37iy", "in_stock": true, "original_photo_title": "أناناس Primera 850g.jfif", "local_image": "images/أناناس Primera 850g.jfif", "drive_id": "1Up3WRy5XubvB608RrW70XOee2iit37iy", "drive_url": "https://lh3.googleusercontent.com/d/1Up3WRy5XubvB608RrW70XOee2iit37iy", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1Up3WRy5XubvB608RrW70XOee2iit37iy&sz=w600", "name_en": "Primera Pineapple Slices 850g", "name_tr": "Primera Dilim Ananas Konservesi 850g"}, {"id": "prod_63", "name": "زيتون أخضر سلسبيل 2ك", "category": "المعلبات", "category_slug": "canned-goods", "price": 400, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1AI-QAQPw1OaltUyzEzKwt2IgMXHNrrvV", "in_stock": true, "original_photo_title": "زيتون أخضر سلسبيل 2ك.jpg", "local_image": "images/زيتون أخضر سلسبيل 2ك.jpg", "drive_id": "1AI-QAQPw1OaltUyzEzKwt2IgMXHNrrvV", "drive_url": "https://lh3.googleusercontent.com/d/1AI-QAQPw1OaltUyzEzKwt2IgMXHNrrvV", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1AI-QAQPw1OaltUyzEzKwt2IgMXHNrrvV&sz=w600", "name_en": "Selsebil Green Table Olives 2kg", "name_tr": "Selsebil Sofralık Yeşil Zeytin 2kg"}, {"id": "prod_64", "name": "سمن نباتي مهروسة 1L", "category": "المعلبات", "category_slug": "canned-goods", "price": 30, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1kXMuugZ4vHNKdIHEzDsrXapiC1Jz0jtK", "in_stock": true, "original_photo_title": "سمن نباتي Evet 2L.jfif", "local_image": "images/سمن نباتي Evet 2L.jfif", "drive_id": "1kXMuugZ4vHNKdIHEzDsrXapiC1Jz0jtK", "drive_url": "https://lh3.googleusercontent.com/d/1kXMuugZ4vHNKdIHEzDsrXapiC1Jz0jtK", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1kXMuugZ4vHNKdIHEzDsrXapiC1Jz0jtK&sz=w600", "name_en": "Mahruseh Vegetable Ghee 1L", "name_tr": "Mahruseh Bitkisel Margarin / Yağ 1L"}, {"id": "prod_65", "name": "سمن نباتي مهروسة 1.75L", "category": "المعلبات", "category_slug": "canned-goods", "price": 35, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1gV39JDdvd3rKmnSnLoKpMDR6-AnMTvjI", "in_stock": true, "original_photo_title": "سمن نباتي مهروسة 1.75L.jfif", "local_image": "images/سمن نباتي مهروسة 1.75L.jfif", "drive_id": "1gV39JDdvd3rKmnSnLoKpMDR6-AnMTvjI", "drive_url": "https://lh3.googleusercontent.com/d/1gV39JDdvd3rKmnSnLoKpMDR6-AnMTvjI", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1gV39JDdvd3rKmnSnLoKpMDR6-AnMTvjI&sz=w600", "name_en": "Mahruseh Vegetable Ghee 1.75L", "name_tr": "Mahruseh Bitkisel Margarin / Yağ 1.75L"}, {"id": "prod_66", "name": "سمن نباتي Vita 1L", "category": "المعلبات", "category_slug": "canned-goods", "price": 230, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1vR512jBkkmhag1x8qbCK67pwjvozFhan", "in_stock": true, "original_photo_title": "سمن نباتي  Vita 1L.jfif", "local_image": "images/سمن نباتي  Vita 1L.jfif", "drive_id": "1vR512jBkkmhag1x8qbCK67pwjvozFhan", "drive_url": "https://lh3.googleusercontent.com/d/1vR512jBkkmhag1x8qbCK67pwjvozFhan", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1vR512jBkkmhag1x8qbCK67pwjvozFhan&sz=w600", "name_en": "Vita Vegetable Ghee 1L", "name_tr": "Vita Bitkisel Susuz Yağ 1L"}, {"id": "prod_67", "name": "سمن نباتي Evet 2L", "category": "المعلبات", "category_slug": "canned-goods", "price": 380, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1kXMuugZ4vHNKdIHEzDsrXapiC1Jz0jtK", "in_stock": true, "original_photo_title": "سمن نباتي Evet 2L.jfif", "local_image": "images/سمن نباتي Evet 2L.jfif", "drive_id": "1kXMuugZ4vHNKdIHEzDsrXapiC1Jz0jtK", "drive_url": "https://lh3.googleusercontent.com/d/1kXMuugZ4vHNKdIHEzDsrXapiC1Jz0jtK", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1kXMuugZ4vHNKdIHEzDsrXapiC1Jz0jtK&sz=w600", "name_en": "Evet Vegetable Cooking Ghee 2L", "name_tr": "Evet Bitkisel Margarin / Yağ 2L"}, {"id": "prod_68", "name": "سمن بلدي بقري BH 1Kg", "category": "المعلبات", "category_slug": "canned-goods", "price": 1100, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1K0Hus28kloA5Zb57bOUVqyWLLJFdyV0R", "in_stock": true, "original_photo_title": "سمن بلدي بقري BH 1Kg.webp", "local_image": "images/سمن بلدي بقري BH 1Kg.webp", "drive_id": "1K0Hus28kloA5Zb57bOUVqyWLLJFdyV0R", "drive_url": "https://lh3.googleusercontent.com/d/1K0Hus28kloA5Zb57bOUVqyWLLJFdyV0R", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1K0Hus28kloA5Zb57bOUVqyWLLJFdyV0R&sz=w600", "name_en": "BH Pure Cow Ghee 1kg", "name_tr": "BH Doğal İnek Sade Yağı 1kg"}, {"id": "prod_69", "name": "سمن بلدي بقري BH 600g", "category": "المعلبات", "category_slug": "canned-goods", "price": 700, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1K0Hus28kloA5Zb57bOUVqyWLLJFdyV0R", "in_stock": true, "original_photo_title": "سمن بلدي بقري BH 1Kg.webp", "local_image": "images/سمن بلدي بقري BH 1Kg.webp", "drive_id": "1K0Hus28kloA5Zb57bOUVqyWLLJFdyV0R", "drive_url": "https://lh3.googleusercontent.com/d/1K0Hus28kloA5Zb57bOUVqyWLLJFdyV0R", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1K0Hus28kloA5Zb57bOUVqyWLLJFdyV0R&sz=w600", "name_en": "BH Pure Cow Ghee 600g", "name_tr": "BH Doğal İnek Sade Yağı 600g"}, {"id": "prod_70", "name": "سمن بلدي بقري BH 250g", "category": "المعلبات", "category_slug": "canned-goods", "price": 350, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1K0Hus28kloA5Zb57bOUVqyWLLJFdyV0R", "in_stock": true, "original_photo_title": "سمن بلدي بقري BH 1Kg.webp", "local_image": "images/سمن بلدي بقري BH 1Kg.webp", "drive_id": "1K0Hus28kloA5Zb57bOUVqyWLLJFdyV0R", "drive_url": "https://lh3.googleusercontent.com/d/1K0Hus28kloA5Zb57bOUVqyWLLJFdyV0R", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1K0Hus28kloA5Zb57bOUVqyWLLJFdyV0R&sz=w600", "name_en": "BH Pure Cow Ghee 250g", "name_tr": "BH Doğal İnek Sade Yağı 250g"}, {"id": "prod_71", "name": "سمن غنم بلدي BH 600g", "category": "المعلبات", "category_slug": "canned-goods", "price": 850, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "BH Pure Sheep Ghee 600g", "name_tr": "BH Doğal Koyun Sade Yağı 600g"}, {"id": "prod_72", "name": "سمن غنم بلدي BH 250g", "category": "المعلبات", "category_slug": "canned-goods", "price": 400, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "BH Pure Sheep Ghee 250g", "name_tr": "BH Doğal Koyun Sade Yağı 250g"}, {"id": "prod_73", "name": "سمن بقري الحلوب 500g (تعبئة الدكان)", "category": "المعلبات", "category_slug": "canned-goods", "price": 800, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1fxjagJ5lGfm-H9r-cC-EFVXNfHcUInTA", "in_stock": true, "original_photo_title": "سمن بقري الحلوب  500g (تعبئة الدكان).jfif", "local_image": "images/سمن بقري الحلوب  500g (تعبئة الدكان).jfif", "drive_id": "1fxjagJ5lGfm-H9r-cC-EFVXNfHcUInTA", "drive_url": "https://lh3.googleusercontent.com/d/1fxjagJ5lGfm-H9r-cC-EFVXNfHcUInTA", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1fxjagJ5lGfm-H9r-cC-EFVXNfHcUInTA&sz=w600", "name_en": "Al-Haloub Traditional Pure Ghee 500g", "name_tr": "Al-Haloub Geleneksel Sade Yağ 500g"}, {"id": "prod_74", "name": "فول Banbey 400g", "category": "المعلبات", "category_slug": "canned-goods", "price": 30, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1g0A5CmaQKHGe8SvyxyOXnIwBWkHbCmKa", "in_stock": true, "original_photo_title": "فول Banbey 400g.webp", "local_image": "images/فول Banbey 400g.webp", "drive_id": "1g0A5CmaQKHGe8SvyxyOXnIwBWkHbCmKa", "drive_url": "https://lh3.googleusercontent.com/d/1g0A5CmaQKHGe8SvyxyOXnIwBWkHbCmKa", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1g0A5CmaQKHGe8SvyxyOXnIwBWkHbCmKa&sz=w600", "name_en": "Banbey Cooked Fava Beans 400g", "name_tr": "Banbey Pişmiş Bakla Konservesi 400g"}, {"id": "prod_75", "name": "فول Roz 400g", "category": "المعلبات", "category_slug": "canned-goods", "price": 30, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/140JVQy8CBF-Op8l3tVyu2OqT7TA-dO-2", "in_stock": true, "original_photo_title": "فول Roz 400g.PNG", "local_image": "images/فول Roz 400g.PNG", "drive_id": "140JVQy8CBF-Op8l3tVyu2OqT7TA-dO-2", "drive_url": "https://lh3.googleusercontent.com/d/140JVQy8CBF-Op8l3tVyu2OqT7TA-dO-2", "drive_thumb_url": "https://drive.google.com/thumbnail?id=140JVQy8CBF-Op8l3tVyu2OqT7TA-dO-2&sz=w600", "name_en": "Roz Fava Beans in Salt Water 400g", "name_tr": "Roz Konserve Bakla 400g"}, {"id": "prod_76", "name": "فول الصفوة حبة صغيرة 400g", "category": "المعلبات", "category_slug": "canned-goods", "price": 35, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1ulQ_ZUIKNhfvQ9-4fOg_YcE-O4cZqxcr", "in_stock": true, "original_photo_title": "فول الصفوة حبة صغيرة  400g.jfif", "local_image": "images/فول الصفوة حبة صغيرة  400g.jfif", "drive_id": "1ulQ_ZUIKNhfvQ9-4fOg_YcE-O4cZqxcr", "drive_url": "https://lh3.googleusercontent.com/d/1ulQ_ZUIKNhfvQ9-4fOg_YcE-O4cZqxcr", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1ulQ_ZUIKNhfvQ9-4fOg_YcE-O4cZqxcr&sz=w600", "name_en": "Al-Safwa Small Fava Beans 400g", "name_tr": "Al-Safwa Küçük Tane Bakla 400g"}, {"id": "prod_77", "name": "فول الصفوة حبة كبيرة 400g", "category": "المعلبات", "category_slug": "canned-goods", "price": 40, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1Uhi64f323HTW8i-Tjf1qUQomJZQrX-pv", "in_stock": true, "original_photo_title": "فول الصفوة حبة كبيرة  400g.jfif", "local_image": "images/فول الصفوة حبة كبيرة  400g.jfif", "drive_id": "1Uhi64f323HTW8i-Tjf1qUQomJZQrX-pv", "drive_url": "https://lh3.googleusercontent.com/d/1Uhi64f323HTW8i-Tjf1qUQomJZQrX-pv", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1Uhi64f323HTW8i-Tjf1qUQomJZQrX-pv&sz=w600", "name_en": "Al-Safwa Large Fava Beans 400g", "name_tr": "Al-Safwa İri Tane Bakla 400g"}, {"id": "prod_78", "name": "فول Roz 400g 4 علب", "category": "المعلبات", "category_slug": "canned-goods", "price": 100, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/140JVQy8CBF-Op8l3tVyu2OqT7TA-dO-2", "in_stock": true, "original_photo_title": "فول Roz 400g.PNG", "local_image": "images/فول Roz 400g.PNG", "drive_id": "140JVQy8CBF-Op8l3tVyu2OqT7TA-dO-2", "drive_url": "https://lh3.googleusercontent.com/d/140JVQy8CBF-Op8l3tVyu2OqT7TA-dO-2", "drive_thumb_url": "https://drive.google.com/thumbnail?id=140JVQy8CBF-Op8l3tVyu2OqT7TA-dO-2&sz=w600", "name_en": "Roz Fava Beans (4 Cans Value Pack)", "name_tr": "Roz Bakla Konservesi 4'lü Avantaj Paketi"}, {"id": "prod_79", "name": "ذرة حلو Burcu 200g", "category": "المعلبات", "category_slug": "canned-goods", "price": 35, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1HFXusbt0YSZ4jCfPf68QSbKKyRB_yPYq", "in_stock": true, "original_photo_title": "ذرة حلو  Burcu 200g.png", "local_image": "images/ذرة حلو  Burcu 200g.png", "drive_id": "1HFXusbt0YSZ4jCfPf68QSbKKyRB_yPYq", "drive_url": "https://lh3.googleusercontent.com/d/1HFXusbt0YSZ4jCfPf68QSbKKyRB_yPYq", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1HFXusbt0YSZ4jCfPf68QSbKKyRB_yPYq&sz=w600", "name_en": "Burcu Sweet Corn 200g", "name_tr": "Burcu Tatlı Mısır Konservesi 200g"}, {"id": "prod_80", "name": "ذرة حلو هنا 210غم", "category": "المعلبات", "category_slug": "canned-goods", "price": 35, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1awo9uYeXxleTpf3Y9ZirXxkWcjaI5ED9", "in_stock": true, "original_photo_title": "ذرة حلو هنا 210غم.jfif", "local_image": "images/ذرة حلو هنا 210غم.jfif", "drive_id": "1awo9uYeXxleTpf3Y9ZirXxkWcjaI5ED9", "drive_url": "https://lh3.googleusercontent.com/d/1awo9uYeXxleTpf3Y9ZirXxkWcjaI5ED9", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1awo9uYeXxleTpf3Y9ZirXxkWcjaI5ED9&sz=w600", "name_en": "Hana Sweet Corn 210g", "name_tr": "Hana Tatlı Mısır Konservesi 210g"}, {"id": "prod_81", "name": "باربونيا Yurt 200g", "category": "المعلبات", "category_slug": "canned-goods", "price": 35, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1ktN1UsAtUK7D0kdceZIu43C9_xhLm6gG", "in_stock": true, "original_photo_title": "باربونيا Yurt 200g.webp", "local_image": "images/باربونيا Yurt 200g.jpg", "drive_id": "1ktN1UsAtUK7D0kdceZIu43C9_xhLm6gG", "drive_url": "https://lh3.googleusercontent.com/d/1W3lJg09J-gKDMTPI7_o3lPRVbISGCZ_b", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1W3lJg09J-gKDMTPI7_o3lPRVbISGCZ_b&sz=w600", "name_en": "Yurt Barbunya Beans Pilaki 200g", "name_tr": "Yurt Barbunya Pilaki Konservesi 200g"}, {"id": "prod_82", "name": "فاصوليا Yurt 200g", "category": "المعلبات", "category_slug": "canned-goods", "price": 35, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1k-lXJ4k6PZmUuYjpUn6qkVA3R2IYP8bY", "in_stock": true, "original_photo_title": "فاصوليا Yurt 200g.jfif", "local_image": "images/فاصوليا Yurt 200g.jfif", "drive_id": "1k-lXJ4k6PZmUuYjpUn6qkVA3R2IYP8bY", "drive_url": "https://lh3.googleusercontent.com/d/1k-lXJ4k6PZmUuYjpUn6qkVA3R2IYP8bY", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1k-lXJ4k6PZmUuYjpUn6qkVA3R2IYP8bY&sz=w600", "name_en": "Yurt White Beans Pilaki 200g", "name_tr": "Yurt Kuru Fasulye Pilaki 200g"}, {"id": "prod_83", "name": "فاصوليا Suntat 400g", "category": "المعلبات", "category_slug": "canned-goods", "price": 70, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1NjJP5NVOqodAdXJpWOhTIAyEX8AKa3kM", "in_stock": true, "original_photo_title": "فاصوليا Suntat 400g.jpg", "local_image": "images/فاصوليا Suntat 400g.jpg", "drive_id": "1NjJP5NVOqodAdXJpWOhTIAyEX8AKa3kM", "drive_url": "https://lh3.googleusercontent.com/d/1NjJP5NVOqodAdXJpWOhTIAyEX8AKa3kM", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1NjJP5NVOqodAdXJpWOhTIAyEX8AKa3kM&sz=w600", "name_en": "Suntat White Beans in Tomato Sauce 400g", "name_tr": "Suntat Domates Soslu Kuru Fasulye 400g"}, {"id": "prod_84", "name": "بازيلا خضراء هنا 400g", "category": "المعلبات", "category_slug": "canned-goods", "price": 60, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1HfTS2pIBXWpvK8i8diBrOU7Vj2BwRk7R", "in_stock": true, "original_photo_title": "بازيلا خضراء هنا 400g.webp", "local_image": "images/بازيلا خضراء هنا 400g.webp", "drive_id": "1HfTS2pIBXWpvK8i8diBrOU7Vj2BwRk7R", "drive_url": "https://lh3.googleusercontent.com/d/1HfTS2pIBXWpvK8i8diBrOU7Vj2BwRk7R", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1HfTS2pIBXWpvK8i8diBrOU7Vj2BwRk7R&sz=w600", "name_en": "Hana Tender Green Peas 400g", "name_tr": "Hana Taze Yeşil Bezelye Konservesi 400g"}, {"id": "prod_85", "name": "فطر مقطع Original", "category": "المعلبات", "category_slug": "canned-goods", "price": 60, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Original Sliced Mushrooms 400g", "name_tr": "Original Dilimli Mantar Konservesi 400g"}, {"id": "prod_86", "name": "حمص حب مؤاد وطن 200غم", "category": "المعلبات", "category_slug": "canned-goods", "price": 30, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Mawad Watan Cooked Chickpeas 200g", "name_tr": "Mevad Vatan Haşlanmış Nohut 200g"}, {"id": "prod_87", "name": "حمص حب هنا 200غم", "category": "المعلبات", "category_slug": "canned-goods", "price": 30, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Hana Cooked Chickpeas 200g", "name_tr": "Hana Haşlanmış Nohut Konservesi 200g"}, {"id": "prod_88", "name": "هريسه حار Telloise صغير", "category": "المعلبات", "category_slug": "canned-goods", "price": 65, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1Bv8jzS8-_gfCGyRdmtvHht8SNE7xPIDz", "in_stock": true, "original_photo_title": "هريسه حار Telloise صغير.PNG", "local_image": "images/هريسه حار Telloise صغير.PNG", "drive_id": "1Bv8jzS8-_gfCGyRdmtvHht8SNE7xPIDz", "drive_url": "https://lh3.googleusercontent.com/d/1Bv8jzS8-_gfCGyRdmtvHht8SNE7xPIDz", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1Bv8jzS8-_gfCGyRdmtvHht8SNE7xPIDz&sz=w600", "name_en": "Telloise Spicy Harissa Paste (Small)", "name_tr": "Telloise Acı Harissa Biber Ezmesi (Küçük)"}, {"id": "prod_89", "name": "هريسه حار Telloise كبير", "category": "المعلبات", "category_slug": "canned-goods", "price": 110, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1Bv8jzS8-_gfCGyRdmtvHht8SNE7xPIDz", "in_stock": true, "original_photo_title": "هريسه حار Telloise صغير.PNG", "local_image": "images/هريسه حار Telloise صغير.PNG", "drive_id": "1Bv8jzS8-_gfCGyRdmtvHht8SNE7xPIDz", "drive_url": "https://lh3.googleusercontent.com/d/1Bv8jzS8-_gfCGyRdmtvHht8SNE7xPIDz", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1Bv8jzS8-_gfCGyRdmtvHht8SNE7xPIDz&sz=w600", "name_en": "Telloise Spicy Harissa Paste (Large)", "name_tr": "Telloise Acı Harissa Biber Ezmesi (Büyük)"}, {"id": "prod_90", "name": "معجون فلفل حار سلسبيل", "category": "المعلبات", "category_slug": "canned-goods", "price": 150, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1IuWNgtugKE53IiyGhqf41r0iduM0O6tv", "in_stock": true, "original_photo_title": "معجون فلفل حار سلسبيل.png", "local_image": "images/معجون فلفل حار سلسبيل.png", "drive_id": "1IuWNgtugKE53IiyGhqf41r0iduM0O6tv", "drive_url": "https://lh3.googleusercontent.com/d/1IuWNgtugKE53IiyGhqf41r0iduM0O6tv", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1IuWNgtugKE53IiyGhqf41r0iduM0O6tv&sz=w600", "name_en": "Selsebil Hot Pepper Paste", "name_tr": "Selsebil Acı Biber Salçası"}, {"id": "prod_91", "name": "معجون فلفل حلو سلسبيل", "category": "المعلبات", "category_slug": "canned-goods", "price": 150, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1lJbIjjHV69sPHh6ihxQAmVRTIEwB9PtA", "in_stock": true, "original_photo_title": "معجون فلفل حلو سلسبيل.png", "local_image": "images/معجون فلفل حلو سلسبيل.png", "drive_id": "1lJbIjjHV69sPHh6ihxQAmVRTIEwB9PtA", "drive_url": "https://lh3.googleusercontent.com/d/1lJbIjjHV69sPHh6ihxQAmVRTIEwB9PtA", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1lJbIjjHV69sPHh6ihxQAmVRTIEwB9PtA&sz=w600", "name_en": "Selsebil Sweet Pepper Paste", "name_tr": "Selsebil Tatlı Biber Salçası"}, {"id": "prod_92", "name": "مخلل زنجبيل 300غم", "category": "المعلبات", "category_slug": "canned-goods", "price": 250, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Pickled Ginger Slices 300g", "name_tr": "Zencefil Turşusu 300g"}, {"id": "prod_93", "name": "مخلل خيار سلسبيل 1ك", "category": "المعلبات", "category_slug": "canned-goods", "price": 120, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1R8oCHoxCbllBgb6G7l3X0cIL1BXiAJ1R", "in_stock": true, "original_photo_title": "مخلل خيار سلسبيل 1ك .png", "local_image": "images/مخلل خيار سلسبيل 1ك .png", "drive_id": "1R8oCHoxCbllBgb6G7l3X0cIL1BXiAJ1R", "drive_url": "https://lh3.googleusercontent.com/d/1R8oCHoxCbllBgb6G7l3X0cIL1BXiAJ1R", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1R8oCHoxCbllBgb6G7l3X0cIL1BXiAJ1R&sz=w600", "name_en": "Selsebil Crunchy Pickled Cucumbers 1kg", "name_tr": "Selsebil Kıtır Salatalık Turşusu 1kg"}, {"id": "prod_94", "name": "مخلل لفت سلسبيل 550غم", "category": "المعلبات", "category_slug": "canned-goods", "price": 120, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1ewSBCd-INRWcH1JxOGM1uCRB5Kmz6IXf", "in_stock": true, "original_photo_title": "مخلل لفت سلسبيل 550غم.png", "local_image": "images/مخلل لفت سلسبيل 550غم.png", "drive_id": "1ewSBCd-INRWcH1JxOGM1uCRB5Kmz6IXf", "drive_url": "https://lh3.googleusercontent.com/d/1ewSBCd-INRWcH1JxOGM1uCRB5Kmz6IXf", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1ewSBCd-INRWcH1JxOGM1uCRB5Kmz6IXf&sz=w600", "name_en": "Selsebil Pickled Turnips 550g", "name_tr": "Selsebil Şalgam Turşusu 550g"}, {"id": "prod_95", "name": "مخلل ملفوف سلسبيل 450غم", "category": "المعلبات", "category_slug": "canned-goods", "price": 90, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Selsebil Pickled Cabbage 450g", "name_tr": "Selsebil Lahana Turşusu 450g"}, {"id": "prod_96", "name": "مقدوس سلسبيل 600غم", "category": "المعلبات", "category_slug": "canned-goods", "price": 290, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1NODR3I9fjpo6pVfd-KEXHQqZJXmCL7ky", "in_stock": true, "original_photo_title": "مقدوس سلسبيل 600غم.png", "local_image": "images/مقدوس سلسبيل 600غم.png", "drive_id": "1NODR3I9fjpo6pVfd-KEXHQqZJXmCL7ky", "drive_url": "https://lh3.googleusercontent.com/d/1NODR3I9fjpo6pVfd-KEXHQqZJXmCL7ky", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1NODR3I9fjpo6pVfd-KEXHQqZJXmCL7ky&sz=w600", "name_en": "Selsebil Stuffed Makdous Eggplants 600g", "name_tr": "Selsebil Cevizli Makdous Patlıcan 600g"}, {"id": "prod_97", "name": "مقدوس سلسبيل 950غم", "category": "المعلبات", "category_slug": "canned-goods", "price": 430, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1VzOsfTx6ORvDHS1ybHW5M8FtgQ4LA7H2", "in_stock": true, "original_photo_title": "مقدوس سلسبيل 950غم.png", "local_image": "images/مقدوس سلسبيل 950غم.png", "drive_id": "1VzOsfTx6ORvDHS1ybHW5M8FtgQ4LA7H2", "drive_url": "https://lh3.googleusercontent.com/d/1VzOsfTx6ORvDHS1ybHW5M8FtgQ4LA7H2", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1VzOsfTx6ORvDHS1ybHW5M8FtgQ4LA7H2&sz=w600", "name_en": "Selsebil Stuffed Makdous Eggplants 950g", "name_tr": "Selsebil Cevizli Makdous Patlıcan 950g"}, {"id": "prod_98", "name": "ورق عنب سلسبيل 2ك", "category": "المعلبات", "category_slug": "canned-goods", "price": 400, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1rKI3APW3VjVUWzRlyAdZk-Oc37hFODgx", "in_stock": true, "original_photo_title": "ورق عنب سلسبيل 2ك.png", "local_image": "images/ورق عنب سلسبيل 2ك.png", "drive_id": "1rKI3APW3VjVUWzRlyAdZk-Oc37hFODgx", "drive_url": "https://lh3.googleusercontent.com/d/1rKI3APW3VjVUWzRlyAdZk-Oc37hFODgx", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1rKI3APW3VjVUWzRlyAdZk-Oc37hFODgx&sz=w600", "name_en": "Selsebil Pickled Grape Leaves 2kg", "name_tr": "Selsebil Salamura Asma Yaprağı 2kg"}, {"id": "prod_99", "name": "دبس تمر الأموي 750غم", "category": "المعلبات", "category_slug": "canned-goods", "price": 120, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Al-Umawi Natural Date Molasses 750g", "name_tr": "Al-Umawi Doğal Hurma Pekmezi 750g"}, {"id": "prod_100", "name": "دبس تمر زمان 1ك", "category": "المعلبات", "category_slug": "canned-goods", "price": 150, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Zaman Date Molasses 1kg", "name_tr": "Zaman Doğal Hurma Pekmezi 1kg"}, {"id": "prod_101", "name": "حليب مكثف محلى الفجر 387غم", "category": "المعلبات", "category_slug": "canned-goods", "price": 120, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1c-0YBgkb0b9Wf6JVFbsX4V4ksOK1KehH", "in_stock": true, "original_photo_title": "حليب مكثف محلى الفجر 387غم.png", "local_image": "images/حليب مكثف محلى الفجر 387غم.png", "drive_id": "1c-0YBgkb0b9Wf6JVFbsX4V4ksOK1KehH", "drive_url": "https://lh3.googleusercontent.com/d/1c-0YBgkb0b9Wf6JVFbsX4V4ksOK1KehH", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1c-0YBgkb0b9Wf6JVFbsX4V4ksOK1KehH&sz=w600", "name_en": "Al-Fajr Sweetened Condensed Milk 387g", "name_tr": "Al-Fajr Şekerli Koyu Süt 387g"}, {"id": "prod_102", "name": "حليب مكثف أبوقوس160غم", "category": "المعلبات", "category_slug": "canned-goods", "price": 90, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/15JZKjiQg9HDmPMDme91aPn9fPOmIXMtE", "in_stock": true, "original_photo_title": "حليب مكثف ابو قوس 160 جم.jpg", "local_image": "images/حليب مكثف ابو قوس 160 جم.jpg", "drive_id": "15JZKjiQg9HDmPMDme91aPn9fPOmIXMtE", "drive_url": "https://lh3.googleusercontent.com/d/15JZKjiQg9HDmPMDme91aPn9fPOmIXMtE", "drive_thumb_url": "https://drive.google.com/thumbnail?id=15JZKjiQg9HDmPMDme91aPn9fPOmIXMtE&sz=w600", "name_en": "Rainbow Evaporated Milk 160g", "name_tr": "Rainbow Buharlaştırılmış Süt 160g"}, {"id": "prod_103", "name": "قشطة Puck 160g", "category": "المعلبات", "category_slug": "canned-goods", "price": 90, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1I6d-izL__X-tndqaRSlONO4fY3Vpc6Su", "in_stock": true, "original_photo_title": "قشطة Puck 160g.jfif", "local_image": "images/قشطة Puck 160g.jfif", "drive_id": "1I6d-izL__X-tndqaRSlONO4fY3Vpc6Su", "drive_url": "https://lh3.googleusercontent.com/d/1I6d-izL__X-tndqaRSlONO4fY3Vpc6Su", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1I6d-izL__X-tndqaRSlONO4fY3Vpc6Su&sz=w600", "name_en": "Puck Thick Cream 160g", "name_tr": "Puck Süt Kreması 160g"}, {"id": "prod_104", "name": "قشطة قيمر 125g", "category": "المعلبات", "category_slug": "canned-goods", "price": 45, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/15wyupcYEDP3FfyT68v9xJNluqFcxHLLX", "in_stock": true, "original_photo_title": "قشطة قيمر  125g.jfif", "local_image": "images/قشطة قيمر  125g.jfif", "drive_id": "15wyupcYEDP3FfyT68v9xJNluqFcxHLLX", "drive_url": "https://lh3.googleusercontent.com/d/15wyupcYEDP3FfyT68v9xJNluqFcxHLLX", "drive_thumb_url": "https://drive.google.com/thumbnail?id=15wyupcYEDP3FfyT68v9xJNluqFcxHLLX&sz=w600", "name_en": "Geymar Dairy Cream 125g", "name_tr": "Geymar Kahvaltılık Kaymak 125g"}, {"id": "prod_105", "name": "زعتر حنيف أخضر 300غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 100, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1zHqI8qIZit_2GopXiC5_5h68JgxTjN2v", "in_stock": true, "original_photo_title": "زعتر حنيف أخضر 300غم.png", "local_image": "images/زعتر حنيف أخضر 300غم.png", "drive_id": "1zHqI8qIZit_2GopXiC5_5h68JgxTjN2v", "drive_url": "https://lh3.googleusercontent.com/d/1zHqI8qIZit_2GopXiC5_5h68JgxTjN2v", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1zHqI8qIZit_2GopXiC5_5h68JgxTjN2v&sz=w600", "name_en": "Haneef Green Zaatar Blend 300g", "name_tr": "Hanif Yeşil Halep Zahteri 300g"}, {"id": "prod_106", "name": "زعتر حنيف دققه 400غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 100, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/16H3ADkc72dv8e89UzuICSC1qQvf8Fu4-", "in_stock": true, "original_photo_title": "زعتر حنيف دققه 400غم.jfif", "local_image": "images/زعتر حنيف دققه 400غم.jfif", "drive_id": "16H3ADkc72dv8e89UzuICSC1qQvf8Fu4-", "drive_url": "https://lh3.googleusercontent.com/d/16H3ADkc72dv8e89UzuICSC1qQvf8Fu4-", "drive_thumb_url": "https://drive.google.com/thumbnail?id=16H3ADkc72dv8e89UzuICSC1qQvf8Fu4-&sz=w600", "name_en": "Haneef Premium Dukkah Zaatar 400g", "name_tr": "Hanif Özel Baharatlı Dukka Zahter 400g"}, {"id": "prod_107", "name": "زعتر أخضر فلسطيني BH 200g", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 75, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1O7DqeHH8n79rFRlYSUqywc-noNKGbqP9", "in_stock": true, "original_photo_title": "زعتر أخضر فلسطيني BH 200g.webp", "local_image": "images/زعتر أخضر فلسطيني BH 200g.webp", "drive_id": "1O7DqeHH8n79rFRlYSUqywc-noNKGbqP9", "drive_url": "https://lh3.googleusercontent.com/d/1O7DqeHH8n79rFRlYSUqywc-noNKGbqP9", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1O7DqeHH8n79rFRlYSUqywc-noNKGbqP9&sz=w600", "name_en": "BH Palestinian Green Zaatar 200g", "name_tr": "BH Filistin Yeşil Zahteri 200g"}, {"id": "prod_108", "name": "زعتر أخضر فلسطيني BH 400g", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 175, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1qsb22xF1eZQ03ey1qw8wrl_u0tdQK4hl", "in_stock": true, "original_photo_title": "زعتر أخضر فلسطيني BH 400g.webp", "local_image": "images/زعتر أخضر فلسطيني BH 400g.webp", "drive_id": "1qsb22xF1eZQ03ey1qw8wrl_u0tdQK4hl", "drive_url": "https://lh3.googleusercontent.com/d/1qsb22xF1eZQ03ey1qw8wrl_u0tdQK4hl", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1qsb22xF1eZQ03ey1qw8wrl_u0tdQK4hl&sz=w600", "name_en": "BH Palestinian Green Zaatar 400g", "name_tr": "BH Filistin Yeşil Zahteri 400g"}, {"id": "prod_109", "name": "قهوة برازيلي 250غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 165, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1vrLvucyc2x97ms-Z0CP9HokwfSUWCnwU", "in_stock": true, "original_photo_title": "قهوة برازيلي.jfif", "local_image": "images/قهوة برازيلي.jfif", "drive_id": "1vrLvucyc2x97ms-Z0CP9HokwfSUWCnwU", "drive_url": "https://lh3.googleusercontent.com/d/1vrLvucyc2x97ms-Z0CP9HokwfSUWCnwU", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1vrLvucyc2x97ms-Z0CP9HokwfSUWCnwU&sz=w600", "name_en": "Fine Brazilian Coffee Beans 250g", "name_tr": "Özel Brezilya Öğütülmüş Kahve 250g"}, {"id": "prod_110", "name": "هال \\ هيل 100غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 280, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1nBsGXZhvkqTpfPAYQ9rkhIpc4GRazxb_", "in_stock": true, "original_photo_title": "هال  هيل  100غم.jfif", "local_image": "images/هال  هيل  100غم.jfif", "drive_id": "1nBsGXZhvkqTpfPAYQ9rkhIpc4GRazxb_", "drive_url": "https://lh3.googleusercontent.com/d/1nBsGXZhvkqTpfPAYQ9rkhIpc4GRazxb_", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1nBsGXZhvkqTpfPAYQ9rkhIpc4GRazxb_&sz=w600", "name_en": "Green Cardamom Pods 100g", "name_tr": "Tane Yeşil Kakule (Hel) 100g"}, {"id": "prod_111", "name": "شاي الروحه 400غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 290, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1ce8NppjcJcnQcsLG5GzF65cjp9uacUqL", "in_stock": true, "original_photo_title": "شاي الروحه 400غم.jpg", "local_image": "images/شاي الروحه 400غم.jpg", "drive_id": "1ce8NppjcJcnQcsLG5GzF65cjp9uacUqL", "drive_url": "https://lh3.googleusercontent.com/d/1ce8NppjcJcnQcsLG5GzF65cjp9uacUqL", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1ce8NppjcJcnQcsLG5GzF65cjp9uacUqL&sz=w600", "name_en": "Al-Rawha Ceylon Black Tea 400g", "name_tr": "Al-Rawha Seylan Siyah Çay 400g"}, {"id": "prod_112", "name": "شاي الروحه 100 كيس", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 200, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1VoJVWYlEn90D7rCY5pD_oWwWHboy0iY3", "in_stock": true, "original_photo_title": "شاي الروحه 100 كيس.webp", "local_image": "images/شاي الروحه 100 كيس.webp", "drive_id": "1VoJVWYlEn90D7rCY5pD_oWwWHboy0iY3", "drive_url": "https://lh3.googleusercontent.com/d/1VoJVWYlEn90D7rCY5pD_oWwWHboy0iY3", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1VoJVWYlEn90D7rCY5pD_oWwWHboy0iY3&sz=w600", "name_en": "Al-Rawha Black Tea (100 Bags)", "name_tr": "Al-Rawha Demlik Süzen Poşet Çay (100'lü)"}, {"id": "prod_113", "name": "شاي الكبوس 200غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 170, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1jcpauOKXSK1i7mcm81av4ECrZQ6YE31g", "in_stock": true, "original_photo_title": "شاي الكبوس 200غم.jpg", "local_image": "images/شاي الكبوس 200غم.jpg", "drive_id": "1jcpauOKXSK1i7mcm81av4ECrZQ6YE31g", "drive_url": "https://lh3.googleusercontent.com/d/1jcpauOKXSK1i7mcm81av4ECrZQ6YE31g", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1jcpauOKXSK1i7mcm81av4ECrZQ6YE31g&sz=w600", "name_en": "Al-Kaboos Yemen Black Tea 200g", "name_tr": "Al-Kaboos Doğal Siyah Çay 200g"}, {"id": "prod_114", "name": "شاي العروسة 250غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 140, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1laf8RKralX0dRkDniTgmeMdI8XtHcSlk", "in_stock": true, "original_photo_title": "شاي العروسة 250غم.webp", "local_image": "images/شاي العروسة 250غم.webp", "drive_id": "1laf8RKralX0dRkDniTgmeMdI8XtHcSlk", "drive_url": "https://lh3.googleusercontent.com/d/1laf8RKralX0dRkDniTgmeMdI8XtHcSlk", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1laf8RKralX0dRkDniTgmeMdI8XtHcSlk&sz=w600", "name_en": "El-Arosa Egyptian Black Tea 250g", "name_tr": "El-Arosa Mısır Siyah Çayı 250g"}, {"id": "prod_115", "name": "شاي جيهان 200غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 230, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1_VbOJGgkFc621ytHSkz3euy1jJfg2Gy7", "in_stock": true, "original_photo_title": "شاي جيهان 200غم.jfif", "local_image": "images/شاي جيهان 200غم.jfif", "drive_id": "1_VbOJGgkFc621ytHSkz3euy1jJfg2Gy7", "drive_url": "https://lh3.googleusercontent.com/d/1_VbOJGgkFc621ytHSkz3euy1jJfg2Gy7", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1_VbOJGgkFc621ytHSkz3euy1jJfg2Gy7&sz=w600", "name_en": "Cihan Cardamom Black Tea 200g", "name_tr": "Cihan Kakuleli Siyah Çay 200g"}, {"id": "prod_116", "name": "شاي أحمد الهيل 200غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 230, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1Zbh4ns24tZn8U6EjF-HoKQJkvu7QLSTe", "in_stock": true, "original_photo_title": "شاي أحمد الهيل 200غم.jfif", "local_image": "images/شاي أحمد الهيل 200غم.jfif", "drive_id": "1Zbh4ns24tZn8U6EjF-HoKQJkvu7QLSTe", "drive_url": "https://lh3.googleusercontent.com/d/1Zbh4ns24tZn8U6EjF-HoKQJkvu7QLSTe", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1Zbh4ns24tZn8U6EjF-HoKQJkvu7QLSTe&sz=w600", "name_en": "Ahmad Tea with Cardamom 200g", "name_tr": "Ahmad Tea Kakule Aromalı Çay 200g"}, {"id": "prod_117", "name": "شاي الملوك 400غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 270, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1E3CPkrPwRE-zzEI4TOkGqQLft6x78IEF", "in_stock": true, "original_photo_title": "شاي الملوك 400غم.jpg", "local_image": "images/شاي الملوك 400غم.jpg", "drive_id": "1E3CPkrPwRE-zzEI4TOkGqQLft6x78IEF", "drive_url": "https://lh3.googleusercontent.com/d/1E3CPkrPwRE-zzEI4TOkGqQLft6x78IEF", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1E3CPkrPwRE-zzEI4TOkGqQLft6x78IEF&sz=w600", "name_en": "Al-Molouk Premium Black Tea 400g", "name_tr": "Al-Molouk Özel Harman Siyah Çay 400g"}, {"id": "prod_118", "name": "شاي ربيع أخضر 100 كيس", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 350, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1wciOn-Cn7iZA1eZFMWGgjSJ10fWE2fmt", "in_stock": true, "original_photo_title": "شاي ربيع أخضر 100 كيس.webp", "local_image": "images/شاي ربيع أخضر 100 كيس.webp", "drive_id": "1wciOn-Cn7iZA1eZFMWGgjSJ10fWE2fmt", "drive_url": "https://lh3.googleusercontent.com/d/1wciOn-Cn7iZA1eZFMWGgjSJ10fWE2fmt", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1wciOn-Cn7iZA1eZFMWGgjSJ10fWE2fmt&sz=w600", "name_en": "Rabea Green Tea (100 Bags)", "name_tr": "Rabea Doğal Yeşil Çay (100 Poşet)"}, {"id": "prod_119", "name": "شاي ربيع أحمر 250غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 180, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/17KzRrQgh8Axt8vVOo7BWoGYpjMMt0Z1e", "in_stock": true, "original_photo_title": "شاي ربيع أحمر  250غم.webp", "local_image": "images/شاي ربيع أحمر  250غم.webp", "drive_id": "17KzRrQgh8Axt8vVOo7BWoGYpjMMt0Z1e", "drive_url": "https://lh3.googleusercontent.com/d/17KzRrQgh8Axt8vVOo7BWoGYpjMMt0Z1e", "drive_thumb_url": "https://drive.google.com/thumbnail?id=17KzRrQgh8Axt8vVOo7BWoGYpjMMt0Z1e&sz=w600", "name_en": "Rabea Red Black Tea 250g", "name_tr": "Rabea Kırmızı Harman Çay 250g"}, {"id": "prod_120", "name": "شاي كرك 1 ظرف", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 45, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1T0hX8muam3FxTdIHBO6mnA_7DKd6wFEW", "in_stock": true, "original_photo_title": "شاي كرك 1 ظرف.jfif", "local_image": "images/شاي كرك 1 ظرف.jfif", "drive_id": "1T0hX8muam3FxTdIHBO6mnA_7DKd6wFEW", "drive_url": "https://lh3.googleusercontent.com/d/1T0hX8muam3FxTdIHBO6mnA_7DKd6wFEW", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1T0hX8muam3FxTdIHBO6mnA_7DKd6wFEW&sz=w600", "name_en": "Karak Spiced Tea Sachet", "name_tr": "Karak Baharatlı Çay Tekli Poşet"}, {"id": "prod_121", "name": "شاي كرك علبة 8 ظروف", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 350, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1ty1k6u2VfkunDz8v8rb1CwefaoW7BZL3", "in_stock": true, "original_photo_title": "شاي كرك علبة 8 ظروف.jpg", "local_image": "images/شاي كرك علبة 8 ظروف.jpg", "drive_id": "1ty1k6u2VfkunDz8v8rb1CwefaoW7BZL3", "drive_url": "https://lh3.googleusercontent.com/d/1ty1k6u2VfkunDz8v8rb1CwefaoW7BZL3", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1ty1k6u2VfkunDz8v8rb1CwefaoW7BZL3&sz=w600", "name_en": "Karak Spiced Tea Box (8 Sachets)", "name_tr": "Karak Baharatlı Sütlü Çay Kutusu (8'li)"}, {"id": "prod_122", "name": "شاي عدن 1 ظرف", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 45, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/12QnVMUFw0hsooGTqO3wuHDf72I3TUBMu", "in_stock": true, "original_photo_title": "شاي عدن 1 ظرف.jfif", "local_image": "images/شاي عدن 1 ظرف.jfif", "drive_id": "12QnVMUFw0hsooGTqO3wuHDf72I3TUBMu", "drive_url": "https://lh3.googleusercontent.com/d/12QnVMUFw0hsooGTqO3wuHDf72I3TUBMu", "drive_thumb_url": "https://drive.google.com/thumbnail?id=12QnVMUFw0hsooGTqO3wuHDf72I3TUBMu&sz=w600", "name_en": "Adeni Spiced Tea Sachet", "name_tr": "Adeni Baharatlı Sütlü Çay Poşeti"}, {"id": "prod_123", "name": "شاي عدن علبة 8 ظروف", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 350, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1DnC_er6_poRizPUJjf4AmyqnbCqk3NJ6", "in_stock": true, "original_photo_title": "شاي عدن علبة 8 ظروف.jpg", "local_image": "images/شاي عدن علبة 8 ظروف.jpg", "drive_id": "1DnC_er6_poRizPUJjf4AmyqnbCqk3NJ6", "drive_url": "https://lh3.googleusercontent.com/d/1DnC_er6_poRizPUJjf4AmyqnbCqk3NJ6", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1DnC_er6_poRizPUJjf4AmyqnbCqk3NJ6&sz=w600", "name_en": "Adeni Spiced Tea Box (8 Sachets)", "name_tr": "Adeni Sütlü Çay Kutusu (8'li)"}, {"id": "prod_124", "name": "شاي الراقي أخضر 125غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 100, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1S0Y2Ua4KqvMsjHGRZAWrnF27cdsFWWe2", "in_stock": true, "original_photo_title": "شاي الراقي أخضر 125غم.webp", "local_image": "images/شاي الراقي أخضر 125غم.webp", "drive_id": "1S0Y2Ua4KqvMsjHGRZAWrnF27cdsFWWe2", "drive_url": "https://lh3.googleusercontent.com/d/1S0Y2Ua4KqvMsjHGRZAWrnF27cdsFWWe2", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1S0Y2Ua4KqvMsjHGRZAWrnF27cdsFWWe2&sz=w600", "name_en": "Al-Raqi Green Tea 125g", "name_tr": "Al-Raqi Doğal Yeşil Çay 125g"}, {"id": "prod_125", "name": "شاي سيلاني (فلت) 1ك", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 300, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1J3YVBEijGbju6KepeKIhEaWs1UY1VdaW", "in_stock": true, "original_photo_title": "شاي سيلاني (فلت) 1ك.jpg", "local_image": "images/شاي سيلاني (فلت) 1ك.jpg", "drive_id": "1J3YVBEijGbju6KepeKIhEaWs1UY1VdaW", "drive_url": "https://lh3.googleusercontent.com/d/1J3YVBEijGbju6KepeKIhEaWs1UY1VdaW", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1J3YVBEijGbju6KepeKIhEaWs1UY1VdaW&sz=w600", "name_en": "Loose Leaf Ceylon Black Tea 1kg", "name_tr": "Dökme Seylan Siyah Çayı 1kg"}, {"id": "prod_126", "name": "سحلب بالقرفه العلبي 250غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 100, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1MBSxfmnonpbDUFBQqcfbjiGhECROsoVn", "in_stock": true, "original_photo_title": "سحلب بالقرفه العلبي 250غم.png", "local_image": "images/سحلب بالقرفه العلبي 250غم.png", "drive_id": "1MBSxfmnonpbDUFBQqcfbjiGhECROsoVn", "drive_url": "https://lh3.googleusercontent.com/d/1MBSxfmnonpbDUFBQqcfbjiGhECROsoVn", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1MBSxfmnonpbDUFBQqcfbjiGhECROsoVn&sz=w600", "name_en": "Al-Elbi Cinnamon Sahlab Mix 250g", "name_tr": "Al-Elbi Tarçınlı Sahlep Karışımı 250g"}, {"id": "prod_127", "name": "كاكاو العلبي 250غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 180, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1llu4MMBTnf61ws9Tb64u1s7Dom01o4gJ", "in_stock": true, "original_photo_title": "كاكاو العلبي 250غم.jfif", "local_image": "images/كاكاو العلبي 250غم.jfif", "drive_id": "1llu4MMBTnf61ws9Tb64u1s7Dom01o4gJ", "drive_url": "https://lh3.googleusercontent.com/d/1llu4MMBTnf61ws9Tb64u1s7Dom01o4gJ", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1llu4MMBTnf61ws9Tb64u1s7Dom01o4gJ&sz=w600", "name_en": "Al-Elbi Dutch Cocoa Powder 250g", "name_tr": "Al-Elbi Saf Kakao Tozu 250g"}, {"id": "prod_128", "name": "كابتشيتو العلبي \"الحبة\"", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 15, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1L-3BL8gFpxqB_zJ6PhOkKpNqwJ3Nuan0", "in_stock": true, "original_photo_title": "كابتشيتو العلبي الحبة.png", "local_image": "images/كابتشيتو العلبي الحبة.png", "drive_id": "1L-3BL8gFpxqB_zJ6PhOkKpNqwJ3Nuan0", "drive_url": "https://lh3.googleusercontent.com/d/1L-3BL8gFpxqB_zJ6PhOkKpNqwJ3Nuan0", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1L-3BL8gFpxqB_zJ6PhOkKpNqwJ3Nuan0&sz=w600", "name_en": "Al-Elbi Cappuccino Sachet", "name_tr": "Al-Elbi Tekli Cappuccino Poşeti"}, {"id": "prod_129", "name": "ملوخية ورق \" مهروسة\" 400غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 240, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1LbwZjwyvRT_sCnQCTyLe7pJgMK7Voe9q", "in_stock": true, "original_photo_title": "ملوخية ورق  مهروسة 400غم.jfif", "local_image": "images/ملوخية ورق  مهروسة 400غم.jfif", "drive_id": "1LbwZjwyvRT_sCnQCTyLe7pJgMK7Voe9q", "drive_url": "https://lh3.googleusercontent.com/d/1LbwZjwyvRT_sCnQCTyLe7pJgMK7Voe9q", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1LbwZjwyvRT_sCnQCTyLe7pJgMK7Voe9q&sz=w600", "name_en": "Mahruseh Minced Molokhia Leaves 400g", "name_tr": "Mahruseh İnce Kıyılmış Kuru Mلوخية 400g"}, {"id": "prod_130", "name": "ملوخيةRG مصرية ورق 165غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 165, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "RG Egyptian Molokhia Leaves 165g", "name_tr": "RG Mısır Kuru Mلوخية Yaprağı 165g"}, {"id": "prod_131", "name": "ملوخيةRG مصرية ورق 400غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 240, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "RG Egyptian Molokhia Leaves 400g", "name_tr": "RG Mısır Kuru Mلوخية Yaprağı 400g"}, {"id": "prod_132", "name": "عرق سوس رمزي 40كيس", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 140, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1yoyS_asAC7fBTIwzYE4gPw1JKrJB4B6T", "in_stock": true, "original_photo_title": "عرق سوس رمزي 40كيس 2.webp", "local_image": "images/عرق سوس رمزي 40كيس.webp", "drive_id": "1yoyS_asAC7fBTIwzYE4gPw1JKrJB4B6T", "drive_url": "https://lh3.googleusercontent.com/d/1cLi--USjR3TT8ScPI5tOHVcQwZyVpwmb", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1cLi--USjR3TT8ScPI5tOHVcQwZyVpwmb&sz=w600", "name_en": "Ramzy Licorice Root Drink (40 Bags)", "name_tr": "Ramzi Meyan Kökü Poşet Çayı (40'lı)"}, {"id": "prod_133", "name": "عرق سوس رمزي 800غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 140, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1obVapaqxeVpou7Z1hrq2RAmptqgXO4Vs", "in_stock": true, "original_photo_title": "عرق سوس رمزي 800غم.jpg", "local_image": "images/عرق سوس رمزي 800غم.jpg", "drive_id": "1obVapaqxeVpou7Z1hrq2RAmptqgXO4Vs", "drive_url": "https://lh3.googleusercontent.com/d/1obVapaqxeVpou7Z1hrq2RAmptqgXO4Vs", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1obVapaqxeVpou7Z1hrq2RAmptqgXO4Vs&sz=w600", "name_en": "Ramzy Crushed Licorice Root 800g", "name_tr": "Ramzi Öğütülmüş Meyan Kökü 800g"}, {"id": "prod_134", "name": "متته خارطة 250غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 95, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1En4rZLmzhpu1sXsLhy5qVGN2yAyBPqCf", "in_stock": true, "local_image": null, "drive_id": "1En4rZLmzhpu1sXsLhy5qVGN2yAyBPqCf", "drive_url": null, "drive_thumb_url": null, "original_photo_title": "مته خارطة 250غم.webp", "name_en": "Kharta Mate Tea 250g", "name_tr": "Kharta Yerba Mate Çayı 250g"}, {"id": "prod_135", "name": "متته Pipore 250G", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 95, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1IQH15p8Fx0TuqKwU_4ANzTrCSdgjOS-z", "in_stock": true, "original_photo_title": "متته Pipore 250G.jfif", "local_image": "images/متته Pipore 250G.jfif", "drive_id": "1IQH15p8Fx0TuqKwU_4ANzTrCSdgjOS-z", "drive_url": "https://lh3.googleusercontent.com/d/1IQH15p8Fx0TuqKwU_4ANzTrCSdgjOS-z", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1IQH15p8Fx0TuqKwU_4ANzTrCSdgjOS-z&sz=w600", "name_en": "Pipore Argentine Mate Tea 250g", "name_tr": "Pipore Arjantin Mate Çayı 250g"}, {"id": "prod_136", "name": "فاصوليا بيضاء نعمه 900غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 85, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1HNbVNQ4KUFkGzKNUbTutidoM3FCTEo8h", "in_stock": true, "original_photo_title": "فاصوليا بيضاء نعمه 900غم.png", "local_image": "images/فاصوليا بيضاء نعمه 900غم.png", "drive_id": "1HNbVNQ4KUFkGzKNUbTutidoM3FCTEo8h", "drive_url": "https://lh3.googleusercontent.com/d/1HNbVNQ4KUFkGzKNUbTutidoM3FCTEo8h", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1HNbVNQ4KUFkGzKNUbTutidoM3FCTEo8h&sz=w600", "name_en": "Neama Dried White Beans 900g", "name_tr": "Neama Kuru Beyaz Fasulye 900g"}, {"id": "prod_137", "name": "حمص حب تعمة 900غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 85, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Neama Whole Dried Chickpeas 900g", "name_tr": "Neama Kuru Tane Nohut 900g"}, {"id": "prod_138", "name": "عدس مجروش نعمة 900غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 85, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1s6lQe30SGNZv2CoREKSHLNmhMMX177g-", "in_stock": true, "original_photo_title": "عدس مجروش نعمة 900غم.jfif", "local_image": "images/عدس مجروش نعمة 900غم.jfif", "drive_id": "1s6lQe30SGNZv2CoREKSHLNmhMMX177g-", "drive_url": "https://lh3.googleusercontent.com/d/1s6lQe30SGNZv2CoREKSHLNmhMMX177g-", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1s6lQe30SGNZv2CoREKSHLNmhMMX177g-&sz=w600", "name_en": "Neama Split Red Lentils 900g", "name_tr": "Neama Kırmızı Mercimek 900g"}, {"id": "prod_139", "name": "عدس حبة كبيره نعمة 900غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 90, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1UuL6Hjxmrc75UtmBR6zIOa0DnYXhd_iP", "in_stock": true, "original_photo_title": "عدس حبة كبيره نعمة 900غم.jfif", "local_image": "images/عدس حبة كبيره نعمة 900غم.jfif", "drive_id": "1UuL6Hjxmrc75UtmBR6zIOa0DnYXhd_iP", "drive_url": "https://lh3.googleusercontent.com/d/1UuL6Hjxmrc75UtmBR6zIOa0DnYXhd_iP", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1UuL6Hjxmrc75UtmBR6zIOa0DnYXhd_iP&sz=w600", "name_en": "Neama Whole Brown Lentils 900g", "name_tr": "Neama Yeşil / Kahverengi Mercimek 900g"}, {"id": "prod_140", "name": "برغل ناعم نعمة 900غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 40, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1QXA3VAV3tipbu0Xvfd8VWBAbZAIT7nia", "in_stock": true, "original_photo_title": "برغل ناعم نعمة 900غم.png", "local_image": "images/برغل ناعم نعمة 900غم.png", "drive_id": "1QXA3VAV3tipbu0Xvfd8VWBAbZAIT7nia", "drive_url": "https://lh3.googleusercontent.com/d/1QXA3VAV3tipbu0Xvfd8VWBAbZAIT7nia", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1QXA3VAV3tipbu0Xvfd8VWBAbZAIT7nia&sz=w600", "name_en": "Neama Fine Bulgur 900g", "name_tr": "Neama İnce Köftelik Bulgur 900g"}, {"id": "prod_141", "name": "برغل خشن نعمة 900غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 40, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1Paky51dH9Le5JDL_UeoRkz5gSTQyjiRp", "in_stock": true, "original_photo_title": "برغل خشن نعمة 900غم.avif", "local_image": "images/برغل خشن نعمة 900غم.avif", "drive_id": "1Paky51dH9Le5JDL_UeoRkz5gSTQyjiRp", "drive_url": "https://lh3.googleusercontent.com/d/1Paky51dH9Le5JDL_UeoRkz5gSTQyjiRp", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1Paky51dH9Le5JDL_UeoRkz5gSTQyjiRp&sz=w600", "name_en": "Neama Coarse Bulgur 900g", "name_tr": "Neama İri Pilavlık Bulgur 900g"}, {"id": "prod_142", "name": "برغر أسمر ناعم تعمة 900غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 40, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1lulrhrb5d4YkxQhf2ii8LG62qZbyBziN", "in_stock": true, "original_photo_title": "برغر أسمر ناعم تعمة 900غم.png", "local_image": "images/برغر أسمر ناعم تعمة 900غم.png", "drive_id": "1lulrhrb5d4YkxQhf2ii8LG62qZbyBziN", "drive_url": "https://lh3.googleusercontent.com/d/1lulrhrb5d4YkxQhf2ii8LG62qZbyBziN", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1lulrhrb5d4YkxQhf2ii8LG62qZbyBziN&sz=w600", "name_en": "Neama Brown Fine Bulgur 900g", "name_tr": "Neama Esmer İnce Bulgur 900g"}, {"id": "prod_143", "name": "ذرة بوشار نعمة 900غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 40, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1lMG3F-OXCBUx_7cQCnYXSxq8776aSXeH", "in_stock": true, "original_photo_title": "ذرة بوشار نعمة 900غم.jfif", "local_image": "images/ذرة بوشار نعمة 900غم.jfif", "drive_id": "1lMG3F-OXCBUx_7cQCnYXSxq8776aSXeH", "drive_url": "https://lh3.googleusercontent.com/d/1lMG3F-OXCBUx_7cQCnYXSxq8776aSXeH", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1lMG3F-OXCBUx_7cQCnYXSxq8776aSXeH&sz=w600", "name_en": "Neama Premium Popcorn Kernels 900g", "name_tr": "Neama Cin Mısır (Patlak Mısır) 900g"}, {"id": "prod_144", "name": "كسكسي BH 1Kg", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 175, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/17ifyRtA0QDmDES_6lF4N7TfA8QB89cPO", "in_stock": true, "original_photo_title": "كسكسي BH 1Kg.jpg", "local_image": "images/كسكسي BH 1Kg.jpg", "drive_id": "17ifyRtA0QDmDES_6lF4N7TfA8QB89cPO", "drive_url": "https://lh3.googleusercontent.com/d/17ifyRtA0QDmDES_6lF4N7TfA8QB89cPO", "drive_thumb_url": "https://drive.google.com/thumbnail?id=17ifyRtA0QDmDES_6lF4N7TfA8QB89cPO&sz=w600", "name_en": "BH Traditional Couscous 1kg", "name_tr": "BH Geleneksel İnce Kuskus 1kg"}, {"id": "prod_145", "name": "كسكسي Mama 1Kg", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 175, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1FOqHQht1QKq1YOhQRdCJgdKUlC8KxBjx", "in_stock": true, "original_photo_title": "كسكسي Mama 1Kg.jpg", "local_image": "images/كسكسي Mama 1Kg.jpg", "drive_id": "1FOqHQht1QKq1YOhQRdCJgdKUlC8KxBjx", "drive_url": "https://lh3.googleusercontent.com/d/1FOqHQht1QKq1YOhQRdCJgdKUlC8KxBjx", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1FOqHQht1QKq1YOhQRdCJgdKUlC8KxBjx&sz=w600", "name_en": "Mama Medium Couscous 1kg", "name_tr": "Mama Orta Boy Kuskus 1kg"}, {"id": "prod_146", "name": "رز بسمتي نعمة 900غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 80, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1CaEpFPATBOpf43vtCa9L17e8Z3Z-MVYf", "in_stock": true, "original_photo_title": "رز بنجابي بسمتي سيلى 5ك.jfif", "local_image": "images/رز بنجابي بسمتي سيلى 5ك.jfif", "drive_id": "1CaEpFPATBOpf43vtCa9L17e8Z3Z-MVYf", "drive_url": "https://lh3.googleusercontent.com/d/1CaEpFPATBOpf43vtCa9L17e8Z3Z-MVYf", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1CaEpFPATBOpf43vtCa9L17e8Z3Z-MVYf&sz=w600", "name_en": "Neama Long Grain Basmati Rice 900g", "name_tr": "Neama Uzun Tane Basmati Pirinç 900g"}, {"id": "prod_147", "name": "رز مصري الريف 900غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 70, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1VqitUNPVxGZ1NXukBEoqKDBIhB54Acxf", "in_stock": true, "original_photo_title": "رز مصري الريف 1000غم.webp", "local_image": "images/رز مصري الريف 1000غم.webp", "drive_id": "1VqitUNPVxGZ1NXukBEoqKDBIhB54Acxf", "drive_url": "https://lh3.googleusercontent.com/d/1VqitUNPVxGZ1NXukBEoqKDBIhB54Acxf", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1VqitUNPVxGZ1NXukBEoqKDBIhB54Acxf&sz=w600", "name_en": "Al-Reef Egyptian Short Grain Rice 900g", "name_tr": "Al-Reef Mısır / Baldo Pirinç 900g"}, {"id": "prod_148", "name": "رز مكسر الريف 900غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 60, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1iSkEpYYxH0BwW3iCtRgsVV_W8u73rVV1", "in_stock": true, "original_photo_title": "رز مكسر الريف 1000غم.jpeg", "local_image": "images/رز مكسر الريف 1000غم.jpeg", "drive_id": "1iSkEpYYxH0BwW3iCtRgsVV_W8u73rVV1", "drive_url": "https://lh3.googleusercontent.com/d/1iSkEpYYxH0BwW3iCtRgsVV_W8u73rVV1", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1iSkEpYYxH0BwW3iCtRgsVV_W8u73rVV1&sz=w600", "name_en": "Al-Reef Broken Rice 900g", "name_tr": "Al-Reef Kırık Pirinç 900g"}, {"id": "prod_149", "name": "حمص مطحون BH 1Kg", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 140, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "BH Chickpea Flour 1kg", "name_tr": "BH Nohut Unu 1kg"}, {"id": "prod_150", "name": "رز مطحون BH 1Kg", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 110, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "BH Ground Rice Flour 1kg", "name_tr": "BH İnce Pirinç Unu 1kg"}, {"id": "prod_151", "name": "كشك بلدي BH 400g", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 150, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1zmb4vR_vGZB-6p7CNcpO3Y99BWJ9H1AT", "in_stock": true, "original_photo_title": "كشك بلدي BH 400g.webp", "local_image": "images/كشك بلدي BH 400g.webp", "drive_id": "1zmb4vR_vGZB-6p7CNcpO3Y99BWJ9H1AT", "drive_url": "https://lh3.googleusercontent.com/d/1zmb4vR_vGZB-6p7CNcpO3Y99BWJ9H1AT", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1zmb4vR_vGZB-6p7CNcpO3Y99BWJ9H1AT&sz=w600", "name_en": "BH Authentic Sun-Dried Jameed Kishk 400g", "name_tr": "BH Doğal Keşk / Kurutulmuş Yoğurt 400g"}, {"id": "prod_152", "name": "جميد BH 1Kg", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 700, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1_b-pBF7T_NgA79vZgcgmobg--pBtqlg-", "in_stock": true, "original_photo_title": "جميد BH 1Kg.webp", "local_image": "images/جميد BH 1Kg.webp", "drive_id": "1_b-pBF7T_NgA79vZgcgmobg--pBtqlg-", "drive_url": "https://lh3.googleusercontent.com/d/1_b-pBF7T_NgA79vZgcgmobg--pBtqlg-", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1_b-pBF7T_NgA79vZgcgmobg--pBtqlg-&sz=w600", "name_en": "BH Jordanian Hard Jameed Stone 1kg", "name_tr": "BH Taş Ürdün Cemid / Katık 1kg"}, {"id": "prod_153", "name": "فلافل حنيف", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 75, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1RsJunsjoFhPBejn8eXEmfYkp4og6TOid", "in_stock": true, "original_photo_title": "فلافل حنيف.jfif", "local_image": "images/فلافل حنيف.jfif", "drive_id": "1RsJunsjoFhPBejn8eXEmfYkp4og6TOid", "drive_url": "https://lh3.googleusercontent.com/d/1RsJunsjoFhPBejn8eXEmfYkp4og6TOid", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1RsJunsjoFhPBejn8eXEmfYkp4og6TOid&sz=w600", "name_en": "Haneef Falafel Spice & Mix", "name_tr": "Hanif Falafel Harcı ve Baharatı"}, {"id": "prod_154", "name": "حليب جاف MilkSpray 500g", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 200, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1FQU1VZAagf2snaXJjV4pcwul94meWa3P", "in_stock": true, "original_photo_title": "حليب جاف MilkSpray 500g.jfif", "local_image": "images/حليب جاف MilkSpray 500g.jfif", "drive_id": "1FQU1VZAagf2snaXJjV4pcwul94meWa3P", "drive_url": "https://lh3.googleusercontent.com/d/1FQU1VZAagf2snaXJjV4pcwul94meWa3P", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1FQU1VZAagf2snaXJjV4pcwul94meWa3P&sz=w600", "name_en": "MilkSpray Whole Milk Powder 500g", "name_tr": "MilkSpray Tam Yağlı Süt Tozu 500g"}, {"id": "prod_155", "name": "فريكة خضراء BH 500g", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 120, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/14OT8GEM1toX0oa9NpwRw3y_gC8IXlo9U", "in_stock": true, "original_photo_title": "فريكة خضراء BH 500g.jfif", "local_image": "images/فريكة خضراء BH 500g.jfif", "drive_id": "14OT8GEM1toX0oa9NpwRw3y_gC8IXlo9U", "drive_url": "https://lh3.googleusercontent.com/d/14OT8GEM1toX0oa9NpwRw3y_gC8IXlo9U", "drive_thumb_url": "https://drive.google.com/thumbnail?id=14OT8GEM1toX0oa9NpwRw3y_gC8IXlo9U&sz=w600", "name_en": "BH Green Roasted Freekeh 500g", "name_tr": "BH Taze Yeşil Firik Buğdayı 500g"}, {"id": "prod_156", "name": "فريكة خضراء مهروسة 800غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 220, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/15y1slojnCsz4VJfJR2egiCqiyCk0ZWsT", "in_stock": true, "original_photo_title": "فريكة خضراء مهروسة 800غم.webp", "local_image": "images/فريكة خضراء مهروسة 800غم.webp", "drive_id": "15y1slojnCsz4VJfJR2egiCqiyCk0ZWsT", "drive_url": "https://lh3.googleusercontent.com/d/15y1slojnCsz4VJfJR2egiCqiyCk0ZWsT", "drive_thumb_url": "https://drive.google.com/thumbnail?id=15y1slojnCsz4VJfJR2egiCqiyCk0ZWsT&sz=w600", "name_en": "Mahruseh Crushed Green Freekeh 800g", "name_tr": "Mahruseh Kırık Yeşil Firik 800g"}, {"id": "prod_157", "name": "فريكة خضراء بالكيلو 1ك", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 220, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1haopmV8xuOGBICRim7ljp8_Ttr-ioYaQ", "in_stock": true, "original_photo_title": "فريكة خضراء بالكيلو 1ك.jpg", "local_image": "images/فريكة خضراء بالكيلو 1ك.jpg", "drive_id": "1haopmV8xuOGBICRim7ljp8_Ttr-ioYaQ", "drive_url": "https://lh3.googleusercontent.com/d/1haopmV8xuOGBICRim7ljp8_Ttr-ioYaQ", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1haopmV8xuOGBICRim7ljp8_Ttr-ioYaQ&sz=w600", "name_en": "Bulk Green Freekeh Wheat (1kg)", "name_tr": "Açık Tane Yeşil Firik Buğdayı (1kg)"}, {"id": "prod_158", "name": "ترمس حلو بالكيلو 1ك", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 200, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1nZ6mkQck5z77u-81_uktSKO6WnHO9Ex9", "in_stock": true, "original_photo_title": "ترمس حلو بالكيلو 1ك.jpg", "local_image": "images/ترمس حلو بالكيلو 1ك.jpg", "drive_id": "1nZ6mkQck5z77u-81_uktSKO6WnHO9Ex9", "drive_url": "https://lh3.googleusercontent.com/d/1nZ6mkQck5z77u-81_uktSKO6WnHO9Ex9", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1nZ6mkQck5z77u-81_uktSKO6WnHO9Ex9&sz=w600", "name_en": "Sweet Lupin Beans (1kg)", "name_tr": "Tatlı Termiye / Acıbakla (1kg)"}, {"id": "prod_159", "name": "ترمس مر بالكيلو 1ك", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 100, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1jIkDzWeO6zOtuV48xe6yiiZHLGXSRs2i", "in_stock": true, "original_photo_title": "ترمس مر بالكيلو 1ك.jfif", "local_image": "images/ترمس مر بالكيلو 1ك.jfif", "drive_id": "1jIkDzWeO6zOtuV48xe6yiiZHLGXSRs2i", "drive_url": "https://lh3.googleusercontent.com/d/1jIkDzWeO6zOtuV48xe6yiiZHLGXSRs2i", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1jIkDzWeO6zOtuV48xe6yiiZHLGXSRs2i&sz=w600", "name_en": "Bitter Lupin Beans (1kg)", "name_tr": "Doğal Acı Termiye (1kg)"}, {"id": "prod_160", "name": "فول حبة كبيرة بالكيلو 1ك", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 130, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1NzzAn8nPVfrD9EeQyOALnz2EUmO_Cdvs", "in_stock": true, "original_photo_title": "فول حبة كبيرة بالكيلو 1ك.jfif", "local_image": "images/فول حبة كبيرة بالكيلو 1ك.jfif", "drive_id": "1NzzAn8nPVfrD9EeQyOALnz2EUmO_Cdvs", "drive_url": "https://lh3.googleusercontent.com/d/1NzzAn8nPVfrD9EeQyOALnz2EUmO_Cdvs", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1NzzAn8nPVfrD9EeQyOALnz2EUmO_Cdvs&sz=w600", "name_en": "Large Dry Fava Beans (1kg)", "name_tr": "Kuru İri Bakla (1kg)"}, {"id": "prod_161", "name": "فول حبة صغيرة بالكيلو 1ك", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 130, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1RsT1gnprkl5igUT0LFjDMjg4W7kruHMf", "in_stock": true, "original_photo_title": "فول حبة صغيرة بالكيلو 1ك.jfif", "local_image": "images/فول حبة صغيرة بالكيلو 1ك.jfif", "drive_id": "1RsT1gnprkl5igUT0LFjDMjg4W7kruHMf", "drive_url": "https://lh3.googleusercontent.com/d/1RsT1gnprkl5igUT0LFjDMjg4W7kruHMf", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1RsT1gnprkl5igUT0LFjDMjg4W7kruHMf&sz=w600", "name_en": "Small Dry Fava Beans (1kg)", "name_tr": "Kuru Küçük Bakla (1kg)"}, {"id": "prod_162", "name": "فول مقشور بالكيلو 1ك", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 130, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1yu0flWXbQ1_J5H1lGfV9004_nib3sdYB", "in_stock": true, "original_photo_title": "فول مقشور بالكيلو 1ك.avif", "local_image": "images/فول مقشور بالكيلو 1ك.avif", "drive_id": "1yu0flWXbQ1_J5H1lGfV9004_nib3sdYB", "drive_url": "https://lh3.googleusercontent.com/d/1yu0flWXbQ1_J5H1lGfV9004_nib3sdYB", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1yu0flWXbQ1_J5H1lGfV9004_nib3sdYB&sz=w600", "name_en": "Peeled Split Fava Beans (1kg)", "name_tr": "Kabuksuz Kırık Bakla (1kg)"}, {"id": "prod_163", "name": "طحين اسمر بالكيلو 1ك", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 70, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1DJjr93sJnlH6nBDrPm4piLUh5gqkvvmR", "in_stock": true, "original_photo_title": "طحين اسمر بالكيلو 1ك.jpg", "local_image": "images/طحين اسمر بالكيلو 1ك.jpg", "drive_id": "1DJjr93sJnlH6nBDrPm4piLUh5gqkvvmR", "drive_url": "https://lh3.googleusercontent.com/d/1DJjr93sJnlH6nBDrPm4piLUh5gqkvvmR", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1DJjr93sJnlH6nBDrPm4piLUh5gqkvvmR&sz=w600", "name_en": "Whole Wheat Brown Flour (1kg)", "name_tr": "Kepekli Esmer Buğday Unu (1kg)"}, {"id": "prod_164", "name": "سميد ناعم ankra 500g", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 60, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1HCfYhi3ge5HjblfYtGp8Yl5c_u1MtJRu", "in_stock": true, "original_photo_title": "سميد ناعم ankra 500g.jfif", "local_image": "images/سميد ناعم ankra 500g.jfif", "drive_id": "1HCfYhi3ge5HjblfYtGp8Yl5c_u1MtJRu", "drive_url": "https://lh3.googleusercontent.com/d/1HCfYhi3ge5HjblfYtGp8Yl5c_u1MtJRu", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1HCfYhi3ge5HjblfYtGp8Yl5c_u1MtJRu&sz=w600", "name_en": "Ankara Fine Semolina 500g", "name_tr": "Ankara İnce İrmik 500g"}, {"id": "prod_165", "name": "سميد ناعم بالكيلو 1ك", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 70, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1UI1lkphmRjFt57UykddJ6a3tDqZWSRzL", "in_stock": true, "original_photo_title": "سميد ناعم بالكيلو 1ك.jfif", "local_image": "images/سميد ناعم بالكيلو 1ك.jfif", "drive_id": "1UI1lkphmRjFt57UykddJ6a3tDqZWSRzL", "drive_url": "https://lh3.googleusercontent.com/d/1UI1lkphmRjFt57UykddJ6a3tDqZWSRzL", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1UI1lkphmRjFt57UykddJ6a3tDqZWSRzL&sz=w600", "name_en": "Bulk Coarse Semolina (1kg)", "name_tr": "Açık Kaliteli İrmik (1kg)"}, {"id": "prod_166", "name": "بسماط أحمر BH 300g", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 60, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1HwnReT-0hnMycBxQ3G8qxw9aKc9RBGqz", "in_stock": true, "original_photo_title": "بسماط أحمر BH 300g.webp", "local_image": "images/بسماط أحمر BH 300g.webp", "drive_id": "1HwnReT-0hnMycBxQ3G8qxw9aKc9RBGqz", "drive_url": "https://lh3.googleusercontent.com/d/1HwnReT-0hnMycBxQ3G8qxw9aKc9RBGqz", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1HwnReT-0hnMycBxQ3G8qxw9aKc9RBGqz&sz=w600", "name_en": "BH Red Bread Crumbs 300g", "name_tr": "BH Kırmızı Galeta Unu 300g"}, {"id": "prod_167", "name": "بسماط ابيض BH 1Kg", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 90, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "BH White Bread Crumbs 1kg", "name_tr": "BH Beyaz Galeta Unu 1kg"}, {"id": "prod_168", "name": "نشا ذرة 300غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 40, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1O_c-IoleeIuxdJXlgMhqVOFzIMecZkuH", "in_stock": true, "original_photo_title": "نشا ذرة 300غم.jfif", "local_image": "images/نشا ذرة 300غم.jfif", "drive_id": "1O_c-IoleeIuxdJXlgMhqVOFzIMecZkuH", "drive_url": "https://lh3.googleusercontent.com/d/1O_c-IoleeIuxdJXlgMhqVOFzIMecZkuH", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1O_c-IoleeIuxdJXlgMhqVOFzIMecZkuH&sz=w600", "name_en": "Pure Corn Starch 300g", "name_tr": "Doğal Mısır Nişastası 300g"}, {"id": "prod_169", "name": "ملوخية بسمة 400غم", "category": "المجمدات والألبان", "category_slug": "frozen-dairy", "price": 85, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1i-hWTSGQl4bMjScMXYYZOMdG-zKPGUCR", "in_stock": true, "original_photo_title": "ملوخية بسمة 400غم.webp", "local_image": "images/ملوخية بسمة 400غم.webp", "drive_id": "1i-hWTSGQl4bMjScMXYYZOMdG-zKPGUCR", "drive_url": "https://lh3.googleusercontent.com/d/1i-hWTSGQl4bMjScMXYYZOMdG-zKPGUCR", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1i-hWTSGQl4bMjScMXYYZOMdG-zKPGUCR&sz=w600", "name_en": "Basma Frozen Minced Molokhia 400g", "name_tr": "Basma Dondurulmuş İnce Molokhia 400g"}, {"id": "prod_170", "name": "ملوخية ترك 400غم", "category": "المجمدات والألبان", "category_slug": "frozen-dairy", "price": 80, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1p4ykXRe9zkl6YyexH52pqEcobvDa_Ft2", "in_stock": true, "original_photo_title": "ملوخية ترك 400غم.jfif", "local_image": "images/ملوخية ترك 400غم.jfif", "drive_id": "1p4ykXRe9zkl6YyexH52pqEcobvDa_Ft2", "drive_url": "https://lh3.googleusercontent.com/d/1p4ykXRe9zkl6YyexH52pqEcobvDa_Ft2", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1p4ykXRe9zkl6YyexH52pqEcobvDa_Ft2&sz=w600", "name_en": "Turk Brand Frozen Molokhia 400g", "name_tr": "Turk Dondurulmuş Taze Molokhia 400g"}, {"id": "prod_171", "name": "بامية زيرو بسمة 400غم", "category": "المجمدات والألبان", "category_slug": "frozen-dairy", "price": 120, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1mKwcOQYkTzroUmIdKyb9zfN3Cq8uAZB7", "in_stock": true, "original_photo_title": "بامية زيرو بسمة 400غم.webp", "local_image": "images/بامية زيرو بسمة 400غم.webp", "drive_id": "1mKwcOQYkTzroUmIdKyb9zfN3Cq8uAZB7", "drive_url": "https://lh3.googleusercontent.com/d/1mKwcOQYkTzroUmIdKyb9zfN3Cq8uAZB7", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1mKwcOQYkTzroUmIdKyb9zfN3Cq8uAZB7&sz=w600", "name_en": "Basma Frozen Baby Zero Okra 400g", "name_tr": "Basma Dondurulmuş Sıfır Numara Bamya 400g"}, {"id": "prod_172", "name": "بامية نوارة 400غم", "category": "المجمدات والألبان", "category_slug": "frozen-dairy", "price": 110, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1Kaxw3VKLqWnmZPvLtpOqN-F2Ou1DGCSi", "in_stock": true, "original_photo_title": "بامية نوارة 400غم.jfif", "local_image": "images/بامية نوارة 400غم.jfif", "drive_id": "1Kaxw3VKLqWnmZPvLtpOqN-F2Ou1DGCSi", "drive_url": "https://lh3.googleusercontent.com/d/1Kaxw3VKLqWnmZPvLtpOqN-F2Ou1DGCSi", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1Kaxw3VKLqWnmZPvLtpOqN-F2Ou1DGCSi&sz=w600", "name_en": "Nawara Frozen Baby Okra 400g", "name_tr": "Nawara Dondurulmuş Küçük Bamya 400g"}, {"id": "prod_173", "name": "بامية ترك 400غم", "category": "المجمدات والألبان", "category_slug": "frozen-dairy", "price": 110, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1w2FM4A65aFGaoVn3MvcFVNg5D2uOFDxl", "in_stock": true, "original_photo_title": "بامية ترك 400غم.webp", "local_image": "images/بامية ترك 400غم.webp", "drive_id": "1w2FM4A65aFGaoVn3MvcFVNg5D2uOFDxl", "drive_url": "https://lh3.googleusercontent.com/d/1w2FM4A65aFGaoVn3MvcFVNg5D2uOFDxl", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1w2FM4A65aFGaoVn3MvcFVNg5D2uOFDxl&sz=w600", "name_en": "Turk Brand Frozen Okra 400g", "name_tr": "Turk Dondurulmuş Taze Bamya 400g"}, {"id": "prod_174", "name": "بازيلا وجزر ترك 400غم", "category": "المجمدات والألبان", "category_slug": "frozen-dairy", "price": 85, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1fYaTrUUnkjqnJOhbh8-EYHvDbtGksr1B", "in_stock": true, "original_photo_title": "بازيلا وجزر ترك 400غم.webp", "local_image": "images/بازيلا وجزر ترك 400غم.webp", "drive_id": "1fYaTrUUnkjqnJOhbh8-EYHvDbtGksr1B", "drive_url": "https://lh3.googleusercontent.com/d/1fYaTrUUnkjqnJOhbh8-EYHvDbtGksr1B", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1fYaTrUUnkjqnJOhbh8-EYHvDbtGksr1B&sz=w600", "name_en": "Turk Brand Frozen Peas & Carrots 400g", "name_tr": "Turk Dondurulmuş Bezelye & Havuç 400g"}, {"id": "prod_175", "name": "مانجا مجمد مصري 1ك", "category": "المجمدات والألبان", "category_slug": "frozen-dairy", "price": 200, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/16bz3mv5AbMhUCFEBCW37CAksgB4QNyvw", "in_stock": true, "original_photo_title": "مانجا مجمد مصري 1ك.jfif", "local_image": "images/مانجا مجمد مصري 1ك.jfif", "drive_id": "16bz3mv5AbMhUCFEBCW37CAksgB4QNyvw", "drive_url": "https://lh3.googleusercontent.com/d/16bz3mv5AbMhUCFEBCW37CAksgB4QNyvw", "drive_thumb_url": "https://drive.google.com/thumbnail?id=16bz3mv5AbMhUCFEBCW37CAksgB4QNyvw&sz=w600", "name_en": "Frozen Egyptian Mango Chunks 1kg", "name_tr": "Dondurulmuş Mısır Mango Parçaları 1kg"}, {"id": "prod_176", "name": "حمص الملك كلاسيك 460غم", "category": "المجمدات والألبان", "category_slug": "frozen-dairy", "price": 75, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1yx1vbXrPzA-Y0CB5oK5r6J64HQYpFnHs", "in_stock": true, "original_photo_title": "حمص الملك كلاسيك 460غم.jfif", "local_image": "images/حمص الملك كلاسيك 460غم.jfif", "drive_id": "1yx1vbXrPzA-Y0CB5oK5r6J64HQYpFnHs", "drive_url": "https://lh3.googleusercontent.com/d/1yx1vbXrPzA-Y0CB5oK5r6J64HQYpFnHs", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1yx1vbXrPzA-Y0CB5oK5r6J64HQYpFnHs&sz=w600", "name_en": "Al-Malek Classic Cooked Chickpeas 460g", "name_tr": "Al-Malek Klasik Haşlanmış Nohut 460g"}, {"id": "prod_177", "name": "حمص الملك أكسترا طحينة 460غم", "category": "المجمدات والألبان", "category_slug": "frozen-dairy", "price": 85, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1o6yr5jtysOIH8R482WNcQLNn7dURWZBj", "in_stock": true, "original_photo_title": "حمص الملك أكسترا طحينة 460غم.jfif", "local_image": "images/حمص الملك أكسترا طحينة 460غم.jfif", "drive_id": "1o6yr5jtysOIH8R482WNcQLNn7dURWZBj", "drive_url": "https://lh3.googleusercontent.com/d/1o6yr5jtysOIH8R482WNcQLNn7dURWZBj", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1o6yr5jtysOIH8R482WNcQLNn7dURWZBj&sz=w600", "name_en": "Al-Malek Extra Tahini Chickpeas 460g", "name_tr": "Al-Malek Bol Tahinli Humusluk Nohut 460g"}, {"id": "prod_178", "name": "حمص العجمي كبير 450غم", "category": "المجمدات والألبان", "category_slug": "frozen-dairy", "price": 80, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Al-Ajami Large Hummus 450g", "name_tr": "Al-Acami Büyük Boy Humus 450g"}, {"id": "prod_179", "name": "حمص العجمي صغير 0غم", "category": "المجمدات والألبان", "category_slug": "frozen-dairy", "price": 50, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Al-Ajami Small Hummus 250g", "name_tr": "Al-Acami Küçük Boy Humus 250g"}, {"id": "prod_180", "name": "حمص المزرعه 450غم", "category": "المجمدات والألبان", "category_slug": "frozen-dairy", "price": 70, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1NXulbicvatednC3_B8piZFkn9Ae95s2j", "in_stock": true, "original_photo_title": "حمص المزرعه 400غم.jfif", "local_image": "images/حمص المزرعه 400غم.jfif", "drive_id": "1NXulbicvatednC3_B8piZFkn9Ae95s2j", "drive_url": "https://lh3.googleusercontent.com/d/1NXulbicvatednC3_B8piZFkn9Ae95s2j", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1NXulbicvatednC3_B8piZFkn9Ae95s2j&sz=w600", "name_en": "Al-Mazraah Cooked Chickpeas 450g", "name_tr": "Al-Mezraa Haşlanmış Nohut 450g"}, {"id": "prod_181", "name": "لبن غنم الملك 1ك", "category": "المجمدات والألبان", "category_slug": "frozen-dairy", "price": 200, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Al-Malek Fresh Sheep Yogurt 1kg", "name_tr": "Al-Malek Taze Koyun Yoğurdu 1kg"}, {"id": "prod_182", "name": "لبن غنم المزرعه 1ك", "category": "المجمدات والألبان", "category_slug": "frozen-dairy", "price": 230, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Al-Mazraah Farm Sheep Yogurt 1kg", "name_tr": "Al-Mezraa Doğal Çiftlik Koyun Yoğurdu 1kg"}, {"id": "prod_183", "name": "لبنة المزرعه 460غم", "category": "المجمدات والألبان", "category_slug": "frozen-dairy", "price": 140, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/19FiSVTeejkfw0ifk7uvAKstOy4h9Ucmj", "in_stock": true, "original_photo_title": "لبنة المزرعه 460غم.png", "local_image": "images/لبنة المزرعه 460غم.png", "drive_id": "19FiSVTeejkfw0ifk7uvAKstOy4h9Ucmj", "drive_url": "https://lh3.googleusercontent.com/d/19FiSVTeejkfw0ifk7uvAKstOy4h9Ucmj", "drive_thumb_url": "https://drive.google.com/thumbnail?id=19FiSVTeejkfw0ifk7uvAKstOy4h9Ucmj&sz=w600", "name_en": "Al-Mazraah Fresh Strained Labneh 460g", "name_tr": "Al-Mezraa Süzme Taze Labne 460g"}, {"id": "prod_184", "name": "لبنة الملك 460غم", "category": "المجمدات والألبان", "category_slug": "frozen-dairy", "price": 160, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Al-Malek Creamy Labneh 460g", "name_tr": "Al-Malek Taze Sürülebilir Labne 460g"}, {"id": "prod_185", "name": "خبز سوري ربطة", "category": "المخبوزات والحلويات", "category_slug": "bakery-sweets", "price": 15, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1hSZgl0NoNRgHSeiVNoEUIFuZWMUiJr4k", "in_stock": true, "original_photo_title": "خبز سوري ربطه.webp", "local_image": "images/خبز سوري ربطه.webp", "drive_id": "1hSZgl0NoNRgHSeiVNoEUIFuZWMUiJr4k", "drive_url": "https://lh3.googleusercontent.com/d/1hSZgl0NoNRgHSeiVNoEUIFuZWMUiJr4k", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1hSZgl0NoNRgHSeiVNoEUIFuZWMUiJr4k&sz=w600", "name_en": "Fresh Syrian Flatbread (Pack)", "name_tr": "Taze Suriye Ekmeği (Paket)"}, {"id": "prod_186", "name": "خبز فلسطيني ربطة", "category": "المخبوزات والحلويات", "category_slug": "bakery-sweets", "price": 30, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1rjLuQW6xL9rU0sZGdxkTOyBVIL-kZo0o", "in_stock": true, "original_photo_title": "خبز فلسطيني ربطة.jfif", "local_image": "images/خبز فلسطيني ربطة.jfif", "drive_id": "1rjLuQW6xL9rU0sZGdxkTOyBVIL-kZo0o", "drive_url": "https://lh3.googleusercontent.com/d/1rjLuQW6xL9rU0sZGdxkTOyBVIL-kZo0o", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1rjLuQW6xL9rU0sZGdxkTOyBVIL-kZo0o&sz=w600", "name_en": "Authentic Palestinian Taboon Bread", "name_tr": "Geleneksel Filistin Tabun Ekmeği"}, {"id": "prod_187", "name": "خبز أسمر ربطة", "category": "المخبوزات والحلويات", "category_slug": "bakery-sweets", "price": 30, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1jUeje_UNMyBbrm8d3K6GyJgRJdAmHFwl", "in_stock": true, "original_photo_title": "خبز أسمر ربطة.jfif", "local_image": "images/خبز أسمر ربطة.jfif", "drive_id": "1jUeje_UNMyBbrm8d3K6GyJgRJdAmHFwl", "drive_url": "https://lh3.googleusercontent.com/d/1jUeje_UNMyBbrm8d3K6GyJgRJdAmHFwl", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1jUeje_UNMyBbrm8d3K6GyJgRJdAmHFwl&sz=w600", "name_en": "Whole Wheat Brown Flatbread", "name_tr": "Kepekli Esmer Diyet Ekmeği"}, {"id": "prod_188", "name": "خبز تنور عراقي ربطة", "category": "المخبوزات والحلويات", "category_slug": "bakery-sweets", "price": 45, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Iraqi Tannour Flatbread", "name_tr": "Geleneksel Irak Tandır Ekmeği"}, {"id": "prod_189", "name": "خبز جاودر", "category": "المخبوزات والحلويات", "category_slug": "bakery-sweets", "price": 95, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Rye Bread Loaf", "name_tr": "Doğal Çavdar Ekmeği"}, {"id": "prod_190", "name": "خبز تاندورا", "category": "المخبوزات والحلويات", "category_slug": "bakery-sweets", "price": 45, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": null, "in_stock": true, "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Tandoori Flatbread", "name_tr": "Tandır Taze Lavaş Ekmeği"}, {"id": "prod_191", "name": "خبز صامون صغير", "category": "المخبوزات والحلويات", "category_slug": "bakery-sweets", "price": 50, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1JKipVj0IcbE4PsByiHF_CMSD1-5aplU7", "in_stock": true, "original_photo_title": "خبز صامون صغير.png", "local_image": "images/خبز صامون صغير.png", "drive_id": "1JKipVj0IcbE4PsByiHF_CMSD1-5aplU7", "drive_url": "https://lh3.googleusercontent.com/d/1JKipVj0IcbE4PsByiHF_CMSD1-5aplU7", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1JKipVj0IcbE4PsByiHF_CMSD1-5aplU7&sz=w600", "name_en": "Small Baguette Roll (Samoon)", "name_tr": "Küçük Somun Sandviç Ekmeği"}, {"id": "prod_192", "name": "خبز صامون كبير", "category": "المخبوزات والحلويات", "category_slug": "bakery-sweets", "price": 70, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1bZfuGpoqOPgrMy1xByAYuOq1H_e_14KH", "in_stock": true, "original_photo_title": "خبز_صامون_كبير-removebg-preview.png", "local_image": "images/خبز_صامون_كبير-removebg-preview.png", "drive_id": "1bZfuGpoqOPgrMy1xByAYuOq1H_e_14KH", "drive_url": "https://lh3.googleusercontent.com/d/1bZfuGpoqOPgrMy1xByAYuOq1H_e_14KH", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1bZfuGpoqOPgrMy1xByAYuOq1H_e_14KH&sz=w600", "name_en": "Large Baguette Roll (Samoon)", "name_tr": "Büyük Somun Sandviç Ekmeği"}, {"id": "prod_193", "name": "خبز برغر", "category": "المخبوزات والحلويات", "category_slug": "bakery-sweets", "price": 70, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/10FKlIRdmU3zqK37jGabta63oKadrUiwi", "in_stock": true, "original_photo_title": "خبز_برغر-removebg-preview.png", "local_image": "images/خبز_برغر-removebg-preview.png", "drive_id": "10FKlIRdmU3zqK37jGabta63oKadrUiwi", "drive_url": "https://lh3.googleusercontent.com/d/10FKlIRdmU3zqK37jGabta63oKadrUiwi", "drive_thumb_url": "https://drive.google.com/thumbnail?id=10FKlIRdmU3zqK37jGabta63oKadrUiwi&sz=w600", "name_en": "Soft Burger Buns (Pack)", "name_tr": "Yumuşak Hamburger Ekmeği"}, {"id": "prod_194", "name": "برازق بالكيلو 1ك", "category": "المخبوزات والحلويات", "category_slug": "bakery-sweets", "price": 320, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1darp0OMPHGXmtlH1hj8-5iaiCidx66n6", "in_stock": true, "original_photo_title": "برازق بالكيلو 1ك.jfif", "local_image": "images/برازق بالكيلو 1ك.jfif", "drive_id": "1darp0OMPHGXmtlH1hj8-5iaiCidx66n6", "drive_url": "https://lh3.googleusercontent.com/d/1darp0OMPHGXmtlH1hj8-5iaiCidx66n6", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1darp0OMPHGXmtlH1hj8-5iaiCidx66n6&sz=w600", "name_en": "Damascus Barazek Sesame Cookies 1kg", "name_tr": "Şam Barazek Susamlı Fıstıklı Kurabiye 1kg"}, {"id": "prod_195", "name": "كعك بعجوة بالكيلو 1ك", "category": "المخبوزات والحلويات", "category_slug": "bakery-sweets", "price": 320, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1qe6bGpvGCJG0WwzQLZugP8RRtoI-AnXO", "in_stock": true, "original_photo_title": "كعك بعجوة بالكيلو 1ك.jpeg", "local_image": "images/كعك بعجوة بالكيلو 1ك.jpeg", "drive_id": "1qe6bGpvGCJG0WwzQLZugP8RRtoI-AnXO", "drive_url": "https://lh3.googleusercontent.com/d/1qe6bGpvGCJG0WwzQLZugP8RRtoI-AnXO", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1qe6bGpvGCJG0WwzQLZugP8RRtoI-AnXO&sz=w600", "name_en": "Date-Filled Semolina Cookies (Kaak) 1kg", "name_tr": "Hurmalı Geleneksel Kömbe / Kurabiye 1kg"}, {"id": "prod_196", "name": "كعك شاي بالكيلو 1ك", "category": "المخبوزات والحلويات", "category_slug": "bakery-sweets", "price": 220, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1w012f0XjC2dMDJW3lPy7_dp0NUNveTbc", "in_stock": true, "original_photo_title": "كعك شاي بالكيلو 1ك.jfif", "local_image": "images/كعك شاي بالكيلو 1ك.jfif", "drive_id": "1w012f0XjC2dMDJW3lPy7_dp0NUNveTbc", "drive_url": "https://lh3.googleusercontent.com/d/1w012f0XjC2dMDJW3lPy7_dp0NUNveTbc", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1w012f0XjC2dMDJW3lPy7_dp0NUNveTbc&sz=w600", "name_en": "Crispy Tea Cookies (Kaak Shai) 1kg", "name_tr": "Çıtır Çay Kurabiyesi (Kaak) 1kg"}, {"id": "prod_197", "name": "كروسون 7days", "category": "المخبوزات والحلويات", "category_slug": "bakery-sweets", "price": 25, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1GZ3sd8qdWA5r-VlUM32NQYSXs_bf6Ppn", "in_stock": true, "original_photo_title": "كروسون 7days.jfif", "local_image": "images/كروسون 7days.jfif", "drive_id": "1GZ3sd8qdWA5r-VlUM32NQYSXs_bf6Ppn", "drive_url": "https://lh3.googleusercontent.com/d/1GZ3sd8qdWA5r-VlUM32NQYSXs_bf6Ppn", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1GZ3sd8qdWA5r-VlUM32NQYSXs_bf6Ppn&sz=w600", "name_en": "7Days Soft Chocolate Croissant", "name_tr": "7Days Çikolatalı Taze Kruvasan"}, {"id": "prod_198", "name": "كب كيك", "category": "المخبوزات والحلويات", "category_slug": "bakery-sweets", "price": 15, "original_price": null, "unit": "قطعة / كغ", "is_sale": false, "image": "https://lh3.googleusercontent.com/d/1j7B12kEiHMyHvfFKHp6Lb8D8zRcB-nzJ", "in_stock": true, "original_photo_title": "كب كيك.jfif", "local_image": "images/كب كيك.jfif", "drive_id": "1j7B12kEiHMyHvfFKHp6Lb8D8zRcB-nzJ", "drive_url": "https://lh3.googleusercontent.com/d/1j7B12kEiHMyHvfFKHp6Lb8D8zRcB-nzJ", "drive_thumb_url": "https://drive.google.com/thumbnail?id=1j7B12kEiHMyHvfFKHp6Lb8D8zRcB-nzJ&sz=w600", "name_en": "Fresh Baked Cupcake", "name_tr": "Taze Fırınlanmış Mini Cupcake"}, {"name": "سمن غنم بلدي 100% 1ك", "category": "المعلبات", "category_slug": "canned-goods", "price": 1200, "original_price": null, "unit": "1 كغ", "is_sale": false, "image": null, "in_stock": true, "id": "prod_199", "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "100% Pure Organic Sheep Ghee 1kg", "name_tr": "100% Saf Doğal Koyun Sade Yağı 1kg"}, {"name": "بزر قرع أبيض 1ك", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 350, "original_price": null, "unit": "1 كغ", "is_sale": false, "image": null, "in_stock": true, "id": "prod_200", "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Roasted White Pumpkin Seeds 1kg", "name_tr": "Kavrulmuş Beyaz Kabak Çekirdeği 1kg"}, {"name": "بزر بطيخ أسود 1ك", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 350, "original_price": null, "unit": "1 كغ", "is_sale": false, "image": null, "in_stock": true, "id": "prod_201", "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Roasted Black Watermelon Seeds 1kg", "name_tr": "Kavrulmuş Kara Karpuz Çekirdeği 1kg"}, {"name": "بزر بطيخ أحمر 1ك", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 350, "original_price": null, "unit": "1 كغ", "is_sale": false, "image": null, "in_stock": true, "id": "prod_202", "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Roasted Red Watermelon Seeds 1kg", "name_tr": "Kavrulmuş Kırmızı Karpuz Çekirdeği 1kg"}, {"name": "بزر بطيخ أصفر 1ك", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 300, "original_price": null, "unit": "1 كغ", "is_sale": false, "image": null, "in_stock": true, "id": "prod_203", "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Roasted Yellow Watermelon Seeds 1kg", "name_tr": "Kavrulmuş Sarı Karpuz Çekirdeği 1kg"}, {"name": "بزر بطيخ عادي 1ك", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 300, "original_price": null, "unit": "1 كغ", "is_sale": false, "image": null, "in_stock": true, "id": "prod_204", "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Standard Watermelon Seeds 1kg", "name_tr": "Geleneksel Karpuz Çekirdeği 1kg"}, {"name": "بزر دوار الشمس 1ك", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 250, "original_price": null, "unit": "1 كغ", "is_sale": false, "image": null, "in_stock": true, "id": "prod_205", "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Roasted Salted Sunflower Seeds 1kg", "name_tr": "Tuzlu Kavrulmuş Ay Çekirdeği 1kg"}, {"name": "فستق مالح 1ك", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 300, "original_price": null, "unit": "1 كغ", "is_sale": false, "image": null, "in_stock": true, "id": "prod_206", "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Salted Roasted Crunchy Peanuts 1kg", "name_tr": "Tuzlu Çıtır Kavrulmuş Fıstık 1kg"}, {"name": "فستق مدخن 1ك", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 300, "original_price": null, "unit": "1 كغ", "is_sale": false, "image": null, "in_stock": true, "id": "prod_207", "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Smoked Barbecue Peanuts 1kg", "name_tr": "Tütsülenmiş Barbekü Soslu Fıstık 1kg"}, {"name": "ذرة صفراء محمصة 1ك", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 250, "original_price": null, "unit": "1 كغ", "is_sale": false, "image": null, "in_stock": true, "id": "prod_208", "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Roasted Crunchy Yellow Corn Snack 1kg", "name_tr": "Kavrulmuş Çıtır Sarı Mısır Çerezi 1kg"}, {"name": "بزر كوسا 1ك", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 350, "original_price": null, "unit": "1 كغ", "is_sale": false, "image": null, "in_stock": true, "id": "prod_209", "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Roasted Zucchini Seeds 1kg", "name_tr": "Kavrulmuş İnce Kabak Çekirdeği 1kg"}, {"name": "قهوة الحموي 450غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 600, "original_price": null, "unit": "450 غرام", "is_sale": false, "image": null, "in_stock": true, "id": "prod_210", "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Al-Hamwi Traditional Dark Roast Coffee 450g", "name_tr": "Al-Hamwi Geleneksel Kakuleli Kahve 450g"}, {"name": "قهوة الحموي صغير 180غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 260, "original_price": null, "unit": "180 غرام", "is_sale": false, "image": null, "in_stock": true, "id": "prod_211", "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "Al-Hamwi Traditional Coffee (Small 180g)", "name_tr": "Al-Hamwi Geleneksel Kahve (Küçük 180g)"}, {"name": "قهوة فلسطينية BH 200غم", "category": "مجففات وأعشاب", "category_slug": "dried-goods-herbs", "price": 260, "original_price": null, "unit": "200 غرام", "is_sale": false, "image": null, "in_stock": true, "id": "prod_212", "local_image": null, "drive_id": null, "drive_url": null, "drive_thumb_url": null, "name_en": "BH Authentic Palestinian Coffee 200g", "name_tr": "BH Hakiki Filistin Kakuleli Kahve 200g"}];
+    const WHATSAPP_NUMBER = "905319715833";
+    const DELIVERY_FEE = 100;
+
+    let cart = {};
+    let selectedCategory = null;
+    let searchQuery = '';
+    let currentLang = 'ar';
+
+    const I18N = {
+      ar: {
+        dir: "rtl",
+        notification: "🚚 توصيل سريع لباب البيت | رسوم التوصيل: 100 ليرة فقط",
+        tagline: "Talabatkom - بقالة الحارة",
+        searchPlaceholder: "ابحث عن منتج (أرز، بهارات، شاي، سمن...)",
+        cart: "السلة",
+        heroBadge: "🛵 خدمة توصيل سريعة وموثوقة",
+        heroTitle: "أهلاً بكم في متجر طلباتكم (Talabatkom)",
+        heroDesc: "جميع مستلزمات البيت من المواد الغذائية والمنتجات الطازجة، نجهز طلبك ونوصله لباب بيتك.",
+        deliveryFeeBadge: "🚚 رسوم التوصيل: <strong class='text-amber-300'>100 ليرة</strong>",
+        codBadge: "💵 الدفع عند الاستلام",
+        whatsappBadge: "💬 تأكيد عبر واتساب",
+        viewCart: "عرض السلة",
+        allCategories: "عرض كل الأقسام",
+        browseCategory: "تصفح القسم",
+        saleBadge: "عروض حصرية 🔥",
+        noProducts: "لا توجد منتجات مطابقة",
+        subtotal: "المجموع الفرعي:",
+        deliveryFee: "🚚 رسوم التوصيل:",
+        grandTotal: "المجموع الكلي:",
+        cartTitle: "سلة المشتريات",
+        emptyCart: "سلتك فارغة حالياً",
+        namePlaceholder: "الاسم الكريم *",
+        phonePlaceholder: "رقم الهاتف للتواصل *",
+        addressPlaceholder: "العنوان بالتفصيل (الحي، الشارع، البناء) *",
+        notesPlaceholder: "ملاحظات إضافية (اختياري)",
+        confirmOrder: "📱 تأكيد وإرسال الطلب عبر واتساب",
+        mobileOrder: "عرض السلة وتأكيد الطلب",
+        cookieNotice: "🍪 نستخدم ملفات تعريف الارتباط الأساسية لحفظ سلة مشترياتك وتفضيلاتك وفقاً لـ KVKK.",
+        readPrivacy: "قراءة سياسة الخصوصية",
+        accept: "موافق",
+        close: "إغلاق",
+        contactTitle: "التواصل وساعات العمل",
+        hours: "🕒 يومياً من 9:00 صباحاً حتى 11:00 مساءً",
+        address: "📍 Büyükçekmece, İstanbul, Türkiye",
+        legalTitle: "الروابط القانونية والخصوصية",
+        privacyLink: "سياسة الخصوصية (Privacy Policy)",
+        footerTagline: "بقالة الحارة - طلباتك لباب بيتك | توصيل 100 ليرة فقط",
+        builtBy: "Website built by",
+        copyright: "جميع الحقوق محفوظة.",
+        webDevTitle: "هل ترغب في إنشاء متجر أو موقع إلكتروني احترافي لعملك؟",
+        webDevDesc: "Want a custom, modern, high-speed website or e-commerce store built for your business?",
+        webDevBtn: "تواصل مع محمد نور حجازي | Contact Mohammad",
+        modalClose: "إغلاق ومتابعة التسوق"
+      },
+      en: {
+        dir: "ltr",
+        notification: "🚚 Fast doorstep delivery | Flat delivery fee: 100 TL only",
+        tagline: "Talabatkom - Neighborhood Grocery",
+        searchPlaceholder: "Search for products (rice, spices, tea, ghee...)",
+        cart: "Cart",
+        heroBadge: "🛵 Fast & Reliable Delivery Service",
+        heroTitle: "Welcome to Talabatkom Store",
+        heroDesc: "Everything you need from fresh groceries, dairy, spices and bakery, delivered straight to your door.",
+        deliveryFeeBadge: "🚚 Delivery Fee: <strong class='text-amber-300'>100 TL</strong>",
+        codBadge: "💵 Cash on Delivery",
+        whatsappBadge: "💬 Order via WhatsApp",
+        viewCart: "View Cart",
+        allCategories: "View All Categories",
+        browseCategory: "Browse Category",
+        saleBadge: "Special Offers 🔥",
+        noProducts: "No matching products found",
+        subtotal: "Subtotal:",
+        deliveryFee: "🚚 Delivery Fee:",
+        grandTotal: "Grand Total:",
+        cartTitle: "Shopping Cart",
+        emptyCart: "Your cart is currently empty",
+        namePlaceholder: "Full Name *",
+        phonePlaceholder: "Phone Number *",
+        addressPlaceholder: "Full Delivery Address (District, Street, Building) *",
+        notesPlaceholder: "Order Notes (Optional)",
+        confirmOrder: "📱 Confirm & Send Order on WhatsApp",
+        mobileOrder: "View Cart & Order",
+        cookieNotice: "🍪 We use essential cookies to remember your cart and preferences in compliance with KVKK / GDPR.",
+        readPrivacy: "Read Privacy Policy",
+        accept: "Accept",
+        close: "Close",
+        contactTitle: "Contact & Working Hours",
+        hours: "🕒 Daily from 9:00 AM to 11:00 PM",
+        address: "📍 Büyükçekmece, Istanbul, Turkey",
+        legalTitle: "Legal & Privacy Links",
+        privacyLink: "Privacy Policy (KVKK Compliant)",
+        footerTagline: "Neighborhood Grocery - Fast delivery 100 TL only",
+        builtBy: "Website built by",
+        copyright: "All rights reserved.",
+        webDevTitle: "Want a custom, modern website or online store for your business?",
+        webDevDesc: "We design and develop fast, high-converting websites and e-commerce stores.",
+        webDevBtn: "Contact Mohammadnour Hijazi &rarr;",
+        modalClose: "Close and continue shopping"
+      },
+      tr: {
+        dir: "ltr",
+        notification: "🚚 Kapıya hızlı teslimat | Sabit teslimat ücreti: Sadece 100 TL",
+        tagline: "Talabatkom - Mahallenizin Bakkalı",
+        searchPlaceholder: "Ürün ara (pirinç, baharat, çay, tereyağı...)",
+        cart: "Sepet",
+        heroBadge: "🛵 Hızlı ve Güvenilir Teslimat",
+        heroTitle: "Talabatkom Mağazasına Hoş Geldiniz",
+        heroDesc: "Taze gıda, bakliyat, baharat ve fırın ürünleri kapınıza kadar özenle hazırlanıp teslim edilir.",
+        deliveryFeeBadge: "🚚 Teslimat Ücreti: <strong class='text-amber-300'>100 TL</strong>",
+        codBadge: "💵 Kapıda Nakit Ödeme",
+        whatsappBadge: "💬 WhatsApp ile Kolay Sipariş",
+        viewCart: "Sepeti Görüntüle",
+        allCategories: "Tüm Kategorileri Gör",
+        browseCategory: "Kategoriyi İncele",
+        saleBadge: "Özel Fırsatlar 🔥",
+        noProducts: "Eşleşen ürün bulunamadı",
+        subtotal: "Ara Toplam:",
+        deliveryFee: "🚚 Teslimat Ücreti:",
+        grandTotal: "Genel Toplam:",
+        cartTitle: "Alışveriş Sepeti",
+        emptyCart: "Sepetiniz şu anda boş",
+        namePlaceholder: "Adınız ve Soyadınız *",
+        phonePlaceholder: "İletişim Telefon Numarası *",
+        addressPlaceholder: "Açık Teslimat Adresi (Mahalle, Cadde, Bina No) *",
+        notesPlaceholder: "Sipariş Notu (İsteğe bağlı)",
+        confirmOrder: "📱 Siparişi WhatsApp ile Onayla ve Gönder",
+        mobileOrder: "Sepeti Gör ve Sipariş Ver",
+        cookieNotice: "🍪 Sepetinizi ve tercihlerinizi hatırlamak için KVKK uyumlu temel çerezleri kullanıyoruz.",
+        readPrivacy: "Gizlilik Politikasını Oku",
+        accept: "Kabul Et",
+        close: "Kapat",
+        contactTitle: "İletişim ve Çalışma Saatleri",
+        hours: "🕒 Her gün 09:00 - 23:00 arası",
+        address: "📍 Büyükçekmece, İstanbul, Türkiye",
+        legalTitle: "Yasal Bilgiler ve Gizlilik",
+        privacyLink: "Gizlilik Politikası (KVKK Uyumlu)",
+        footerTagline: "Mahallenizin Bakkalı - Sabit teslimat ücreti 100 TL",
+        builtBy: "Web sitesi tasarımı:",
+        copyright: "Tüm hakları saklıdır.",
+        webDevTitle: "İşletmeniz için modern ve hızlı bir web sitesi ister misiniz?",
+        webDevDesc: "İşinizi büyütmek için özel, modern ve mobil uyumlu e-ticaret siteleri tasarlıyoruz.",
+        webDevBtn: "Mohammadnour Hijazi ile İletişime Geçin &rarr;",
+        modalClose: "Kapat ve alışverişe devam et"
+      }
+    };
+
+    function changeLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('talabatkom_lang', lang);
+      document.getElementById('langSelector').value = lang;
+      
+      const t = I18N[lang] || I18N.ar;
+      document.documentElement.setAttribute('lang', lang);
+      document.documentElement.setAttribute('dir', t.dir);
+
+      // Update UI elements
+      document.getElementById('t_notification').innerHTML = t.notification;
+      document.getElementById('t_tagline').innerText = t.tagline;
+      document.getElementById('searchInput').placeholder = t.searchPlaceholder;
+      document.getElementById('t_cart').innerText = t.cart;
+      document.getElementById('t_heroBadge').innerText = t.heroBadge;
+      document.getElementById('t_heroTitle').innerText = t.heroTitle;
+      document.getElementById('t_heroDesc').innerText = t.heroDesc;
+      document.getElementById('t_deliveryFeeBadge').innerHTML = t.deliveryFeeBadge;
+      document.getElementById('t_codBadge').innerText = t.codBadge;
+      document.getElementById('t_whatsappBadge').innerText = t.whatsappBadge;
+      document.getElementById('t_viewCart').innerText = t.viewCart;
+      document.getElementById('t_mobileOrder').innerText = t.mobileOrder;
+      document.getElementById('t_cartTitle').innerText = t.cartTitle;
+      document.getElementById('t_subtotal').innerText = t.subtotal;
+      document.getElementById('t_deliveryFee').innerText = t.deliveryFee;
+      document.getElementById('t_grandTotal').innerText = t.grandTotal;
+      document.getElementById('custName').placeholder = t.namePlaceholder;
+      document.getElementById('custPhone').placeholder = t.phonePlaceholder;
+      document.getElementById('custAddress').placeholder = t.addressPlaceholder;
+      document.getElementById('custNotes').placeholder = t.notesPlaceholder;
+      document.getElementById('t_confirmOrder').innerText = t.confirmOrder;
+      document.getElementById('t_cookieNotice').innerText = t.cookieNotice;
+      document.getElementById('t_readPrivacy').innerText = t.readPrivacy;
+      document.getElementById('t_accept').innerText = t.accept;
+      document.getElementById('t_close').innerText = t.close;
+      document.getElementById('t_contactTitle').innerText = t.contactTitle;
+      document.getElementById('t_hours').innerText = t.hours;
+      document.getElementById('t_address').innerText = t.address;
+      document.getElementById('t_legalTitle').innerText = t.legalTitle;
+      document.getElementById('t_privacyLink').innerText = t.privacyLink;
+      document.getElementById('t_footerTagline').innerText = t.footerTagline;
+      document.getElementById('t_builtBy').innerText = t.builtBy;
+      document.getElementById('t_copyright').innerText = t.copyright;
+      document.getElementById('t_webDevTitle').innerText = t.webDevTitle;
+      document.getElementById('t_webDevDesc').innerText = t.webDevDesc;
+      document.getElementById('t_webDevBtn').innerHTML = t.webDevBtn;
+      document.getElementById('t_modalClose').innerText = t.modalClose;
+
+      renderRibbon();
+      renderMain();
+      updateCartUI();
+    }
+
+    function getCategoryName(cat) {
+      if (currentLang === 'en' && cat.name_en) return cat.name_en;
+      if (currentLang === 'tr' && cat.name_tr) return cat.name_tr;
+      return cat.name;
+    }
+
+    function toggleTheme() {
+      const isDark = document.documentElement.classList.contains('dark');
+      const next = isDark ? 'light' : 'dark';
+      localStorage.setItem('talabatkom_theme', next);
+      applyTheme(next);
+    }
+
+    function applyTheme(theme) {
+      const html = document.documentElement;
+      const icon = document.getElementById('themeIcon');
+      if (theme === 'dark') {
+        html.classList.add('dark');
+        html.classList.remove('light');
+        if (icon) icon.innerText = '☀️';
+      } else {
+        html.classList.remove('dark');
+        html.classList.add('light');
+        if (icon) icon.innerText = '🌙';
+      }
+    }
+
+    function togglePrivacyModal(show) {
+      document.getElementById('privacyModal').classList.toggle('hidden', !show);
+    }
+
+    function init() {
+      // Initialize theme
+      const savedTheme = localStorage.getItem('talabatkom_theme') || 
+        (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
+      applyTheme(savedTheme);
+
+      // Initialize language
+      const savedLang = localStorage.getItem('talabatkom_lang') || 'ar';
+      changeLanguage(savedLang);
+
+      loadCart();
+      if (!localStorage.getItem('talabatkom_cookies')) {
+        document.getElementById('cookieBanner').classList.remove('hidden');
+      }
+
+      document.getElementById('searchInput').addEventListener('input', (e) => {
+        searchQuery = e.target.value.trim().toLowerCase();
+        renderMain();
+      });
+    }
+
+    function dismissCookies() {
+      localStorage.setItem('talabatkom_cookies', '1');
+      document.getElementById('cookieBanner').classList.add('hidden');
+    }
+
+    function scrollRibbon(dir) {
+      const container = document.getElementById('ribbonContainer');
+      container.scrollBy({ left: dir === 'left' ? -200 : 200, behavior: 'smooth' });
+    }
+
+    function renderRibbon() {
+      const container = document.getElementById('ribbonContainer');
+      let html = '';
+      
+      categories.forEach(c => {
+        const isActive = selectedCategory === c.slug;
+        const displayName = getCategoryName(c);
+        const activeClass = 'bg-brand-600 text-white shadow-md';
+        const inactiveClass = c.is_sale 
+          ? 'bg-red-50 dark:bg-red-950/40 text-red-700 dark:text-red-400 border border-red-200 dark:border-red-800' 
+          : 'bg-slate-100 dark:bg-slate-800 text-slate-700 dark:text-slate-300 hover:bg-slate-200 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700';
+
+        html += `<button onclick="selectCategory('${c.slug}')" class="flex items-center gap-1.5 px-4 py-2 rounded-full text-xs sm:text-sm font-bold whitespace-nowrap transition-all flex-shrink-0 ${isActive ? activeClass : inactiveClass}"><span>${c.icon}</span><span>${displayName}</span>${c.is_sale ? '<span class="bg-red-600 text-white text-[9px] px-1.5 py-0.2 rounded-full font-bold">🔥</span>' : ''}</button>`;
+      });
+      container.innerHTML = html;
+    }
+
+    function selectCategory(slug) {
+      selectedCategory = (selectedCategory === slug) ? null : slug;
+      searchQuery = '';
+      document.getElementById('searchInput').value = '';
+      renderRibbon();
+      renderMain();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function renderMain() {
+      const main = document.getElementById('mainContent');
+      const t = I18N[currentLang] || I18N.ar;
+
+      // Filtered view by category or search:
+      if (selectedCategory || searchQuery) {
+        const catObj = categories.find(c => c.slug === selectedCategory);
+        const catName = catObj ? getCategoryName(catObj) : `"${searchQuery}"`;
+        const filtered = products.filter(p => {
+          const matchesCat = !selectedCategory || p.category_slug === selectedCategory;
+          const matchesSearch = !searchQuery || p.name.toLowerCase().includes(searchQuery) || p.category.toLowerCase().includes(searchQuery);
+          return matchesCat && matchesSearch;
+        });
+
+        let headerHtml = `
+          <div class="flex items-center justify-between pb-3 mb-4 border-b border-slate-200 dark:border-slate-800">
+            <div class="flex items-center gap-2">
+              <span class="text-2xl">${catObj ? catObj.icon : '🔍'}</span>
+              <div>
+                <h2 class="text-base sm:text-xl font-bold text-slate-900 dark:text-white">${catName}</h2>
+                <span class="text-xs text-slate-500 dark:text-slate-400 font-semibold">${filtered.length} items</span>
+              </div>
+            </div>
+            <button onclick="selectCategory(null)" class="text-xs font-bold text-brand-700 dark:text-brand-400 hover:text-brand-800 bg-brand-50 dark:bg-brand-950/40 border border-brand-200 dark:border-brand-800 px-3 py-1.5 rounded-lg">
+              ${t.allCategories} &times;
+            </button>
+          </div>
+        `;
+
+        if (filtered.length === 0) {
+          main.innerHTML = headerHtml + `<div class="text-center py-16 bg-white dark:bg-slate-900 rounded-2xl border border-slate-200 dark:border-slate-800 p-8 font-bold text-xs text-slate-500">${t.noProducts}</div>`;
+        } else {
+          main.innerHTML = headerHtml + `<div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-4">${filtered.map(p => productCardHtml(p)).join('')}</div>`;
+        }
+        return;
+      }
+
+      // DEFAULT VIEW: Clean Category Subdivisions (6 items per section)
+      let html = '<div class="space-y-8">';
+      categories.forEach(cat => {
+        const catItems = products.filter(p => p.category_slug === cat.slug);
+        const preview = catItems.slice(0, 6);
+        const displayName = getCategoryName(cat);
+
+        const cardStyle = cat.is_sale 
+          ? 'bg-gradient-to-r from-red-50/70 via-amber-50/50 to-red-50/70 dark:from-red-950/30 dark:via-amber-950/20 dark:to-red-950/30 border-red-200 dark:border-red-900/60' 
+          : 'bg-white dark:bg-slate-900 border-slate-200/90 dark:border-slate-800 shadow-xs';
+
+        html += `
+          <section class="rounded-2xl p-4 sm:p-5 border transition-all ${cardStyle}">
+            <div class="flex items-center justify-between mb-3.5 pb-2.5 border-b border-slate-100 dark:border-slate-800">
+              <div class="flex items-center gap-2">
+                <span class="text-2xl">${cat.icon}</span>
+                <div>
+                  <h2 class="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white flex items-center gap-1.5">
+                    <span>${displayName}</span>
+                    ${cat.is_sale ? '<span class="bg-red-600 text-white text-[9px] px-2 py-0.5 rounded-full font-bold">🔥</span>' : ''}
+                  </h2>
+                  <p class="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400">${catItems.length} items</p>
+                </div>
+              </div>
+              <button onclick="selectCategory('${cat.slug}')" class="text-xs font-bold text-brand-700 dark:text-brand-400 hover:text-brand-800 bg-brand-50 dark:bg-brand-950/40 hover:bg-brand-100 border border-brand-200 dark:border-brand-800 px-3 py-1 rounded-full transition-all flex items-center gap-1">
+                <span>${t.browseCategory} (${catItems.length})</span>
+                <span>&rarr;</span>
+              </button>
+            </div>
+            <div class="grid grid-cols-3 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-2 sm:gap-3.5">
+              ${preview.map(p => productCardHtml(p)).join('')}
+            </div>
+          </section>
+        `;
+      });
+      html += '</div>';
+      main.innerHTML = html;
+    }
+
+    
+    function getProdName(p) {
+      if (currentLang === 'en' && p.name_en) return p.name_en;
+      if (currentLang === 'tr' && p.name_tr) return p.name_tr;
+      return p.name;
+    }
+
+    function productCardHtml(p) {
+      const qty = cart[p.id] ? cart[p.id].quantity : 0;
+      const displayName = getProdName(p);
+      const saleLabel = currentLang === 'en' ? 'Sale 🔥' : (currentLang === 'tr' ? 'İndirim 🔥' : 'عرض 🔥');
+
+      let photoBlock = '';
+      if (p.image) {
+        photoBlock = `
+          <div class="w-full h-20 sm:h-32 bg-slate-50 dark:bg-slate-800/80 rounded-lg overflow-hidden flex items-center justify-center mb-2 relative border border-slate-100 dark:border-slate-700/60">
+            <img 
+              src="${p.image}" 
+              alt="${displayName}" 
+              loading="lazy" 
+              referrerpolicy="no-referrer"
+              onerror="this.parentElement.style.display='none';"
+              class="w-full h-full object-contain p-1"
+            >
+          </div>
+        `;
+      }
+
+      return `
+        <div class="bg-white dark:bg-slate-900 rounded-xl border border-slate-200/80 dark:border-slate-800 p-2 sm:p-3 shadow-xs hover:shadow-md hover:border-brand-400 dark:hover:border-brand-500 transition-all flex flex-col justify-between relative">
+          ${p.is_sale ? `<span class="absolute top-1.5 ltr:right-1.5 rtl:left-1.5 z-10 bg-red-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded-md">${saleLabel}</span>` : ''}
+          ${photoBlock}
+          <div class="flex-1 flex flex-col justify-between">
+            <div>
+              <span class="text-[9px] sm:text-[10px] text-brand-700 dark:text-brand-400 font-bold block mb-0.5">${p.category}</span>
+              <h3 class="text-[11px] sm:text-xs font-bold text-slate-900 dark:text-white leading-snug line-clamp-2 min-h-[1.75rem]">${displayName}</h3>
+            </div>
+            <div class="mt-2 pt-1.5 border-t border-slate-100 dark:border-slate-800 flex items-center justify-between">
+              <div>
+                <span class="text-xs sm:text-sm font-extrabold text-brand-700 dark:text-brand-400">${p.price} TL</span>
+                ${p.original_price ? `<span class="text-[10px] text-slate-400 dark:text-slate-500 line-through mr-1">${p.original_price}</span>` : ''}
+              </div>
+              ${qty === 0 ? 
+                `<button onclick="addToCart('${p.id}', 1)" class="w-7 h-7 rounded bg-brand-600 hover:bg-brand-700 text-white font-bold flex items-center justify-center text-xs">+</button>` :
+                `<div class="flex items-center gap-1 bg-brand-50 dark:bg-brand-950/60 border border-brand-200 dark:border-brand-800 rounded px-1">
+                  <button onclick="addToCart('${p.id}', -1)" class="text-brand-900 dark:text-brand-200 font-bold text-xs px-1">-</button>
+                  <span class="text-xs font-bold text-brand-900 dark:text-white">${qty}</span>
+                  <button onclick="addToCart('${p.id}', 1)" class="text-brand-900 dark:text-brand-200 font-bold text-xs px-1">+</button>
+                </div>`
+              }
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    function addToCart(prodId, delta) {
+      const p = products.find(x => x.id === prodId);
+      if (!p) return;
+      const currentQty = cart[prodId] ? cart[prodId].quantity : 0;
+      const newQty = currentQty + delta;
+      if (newQty <= 0) {
+        delete cart[prodId];
+      } else {
+        cart[prodId] = { product: p, quantity: newQty };
+      }
+      saveCart();
+      renderMain();
+      updateCartUI();
+    }
+
+    function saveCart() {
+      localStorage.setItem('talabatkom_cart', JSON.stringify(cart));
+    }
+
+    function loadCart() {
+      try {
+        const saved = localStorage.getItem('talabatkom_cart');
+        if (saved) cart = JSON.parse(saved);
+      } catch (e) {}
+      updateCartUI();
+    }
+
+    function updateCartUI() {
+      const count = Object.values(cart).reduce((sum, i) => sum + i.quantity, 0);
+      const badge = document.getElementById('cartCountBadge');
+      const mobileBadge = document.getElementById('mobileCartCount');
+      const mobileFloating = document.getElementById('mobileFloatingCart');
+      
+      if (count > 0) {
+        badge.innerText = count;
+        badge.classList.remove('hidden');
+        mobileBadge.innerText = count;
+        mobileFloating.classList.remove('hidden');
+      } else {
+        badge.classList.add('hidden');
+        mobileFloating.classList.add('hidden');
+      }
+
+      const itemsList = document.getElementById('cartItemsList');
+      const items = Object.values(cart);
+      const t = I18N[currentLang] || I18N.ar;
+
+      if (items.length === 0) {
+        itemsList.innerHTML = `<div class="text-center py-12 text-slate-500 text-xs font-bold">${t.emptyCart}</div>`;
+        document.getElementById('subtotalDisplay').innerText = '0 TL';
+        document.getElementById('grandTotalDisplay').innerText = '0 TL';
+        return;
+      }
+
+      let subtotal = 0;
+      itemsList.innerHTML = items.map(i => {
+        const total = i.product.price * i.quantity;
+        subtotal += total;
+        const pName = getProdName(i.product);
+        const imgBlock = i.product.image ? 
+          `<img src="${i.product.image}" alt="${pName}" referrerpolicy="no-referrer" class="w-12 h-12 rounded-md object-contain bg-white border border-slate-100 dark:border-slate-700 p-0.5 flex-shrink-0">` :
+          `<div class="w-12 h-12 rounded-md bg-slate-100 dark:bg-slate-800 border border-slate-200 dark:border-slate-700 flex items-center justify-center text-lg flex-shrink-0">🛒</div>`;
+
+        return `
+          <div class="flex items-center justify-between p-2 bg-slate-50 dark:bg-slate-800/80 rounded-lg border border-slate-200/60 dark:border-slate-700 text-xs">
+            <div class="flex items-center gap-2 min-w-0">
+              ${imgBlock}
+              <div class="min-w-0">
+                <div class="font-bold text-slate-900 dark:text-white truncate">${pName}</div>
+                <div class="text-brand-700 dark:text-brand-400 font-semibold">${i.product.price} TL × ${i.quantity} = ${total} TL</div>
+              </div>
+            </div>
+            <div class="flex items-center gap-1 flex-shrink-0">
+              <button onclick="addToCart('${i.product.id}', -1)" class="w-5 h-5 bg-slate-200 dark:bg-slate-700 rounded font-bold text-slate-800 dark:text-white">-</button>
+              <span class="font-bold px-1 text-slate-900 dark:text-white">${i.quantity}</span>
+              <button onclick="addToCart('${i.product.id}', 1)" class="w-5 h-5 bg-brand-600 text-white rounded font-bold">+</button>
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      document.getElementById('subtotalDisplay').innerText = `${subtotal} TL`;
+      document.getElementById('grandTotalDisplay').innerText = `${subtotal + DELIVERY_FEE} TL`;
+    }
+
+    function toggleCart(show) {
+      document.getElementById('cartModal').classList.toggle('hidden', !show);
+    }
+
+    function checkoutWhatsApp() {
+      const items = Object.values(cart);
+      if (items.length === 0) return;
+
+      const honeypot = document.getElementById('honeypot').value;
+      if (honeypot) return;
+
+      const name = document.getElementById('custName').value.trim();
+      const phone = document.getElementById('custPhone').value.trim();
+      const address = document.getElementById('custAddress').value.trim();
+      const notes = document.getElementById('custNotes').value.trim();
+
+      if (!name || !phone || !address) {
+        alert(currentLang === 'ar' ? 'يرجى ملء الاسم ورقم الهاتف والعنوان بالتفصيل' : (currentLang === 'tr' ? 'Lütfen ad, telefon ve adres alanlarını doldurunuz' : 'Please fill in name, phone and address'));
+        return;
+      }
+
+      let subtotal = 0;
+      let msg = '';
+
+      if (currentLang === 'tr') {
+        msg += `🛒 *Talabatkom Mağazasından Yeni Sipariş*\n`;
+        msg += `---------------------------------\n`;
+        msg += `👤 *Müşteri Adı:* ${name}\n`;
+        msg += `📱 *Telefon:* ${phone}\n`;
+        msg += `📍 *Teslimat Adresi:* ${address}\n`;
+        if (notes) msg += `📝 *Notlar:* ${notes}\n`;
+        msg += `---------------------------------\n`;
+        msg += `📦 *Sipariş Detayı:*\n`;
+        items.forEach((item, idx) => {
+          const total = item.product.price * item.quantity;
+          subtotal += total;
+          const pName = getProdName(item.product);
+          msg += `${idx + 1}. ${pName} × ${item.quantity} = ${total} TL\n`;
+        });
+        msg += `---------------------------------\n`;
+        msg += `💵 *Ara Toplam:* ${subtotal} TL\n`;
+        msg += `🚚 *Teslimat Ücreti:* ${DELIVERY_FEE} TL\n`;
+        msg += `💰 *Genel Toplam:* ${subtotal + DELIVERY_FEE} TL\n`;
+        msg += `---------------------------------\n`;
+        msg += `Siparişimi onaylamanızı ve hazırlamanızı rica ederim. Teşekkürler!`;
+      } else if (currentLang === 'en') {
+        msg += `🛒 *New Order from Talabatkom Store*\n`;
+        msg += `---------------------------------\n`;
+        msg += `👤 *Customer Name:* ${name}\n`;
+        msg += `📱 *Phone:* ${phone}\n`;
+        msg += `📍 *Address:* ${address}\n`;
+        if (notes) msg += `📝 *Notes:* ${notes}\n`;
+        msg += `---------------------------------\n`;
+        msg += `📦 *Order Items:*\n`;
+        items.forEach((item, idx) => {
+          const total = item.product.price * item.quantity;
+          subtotal += total;
+          const pName = getProdName(item.product);
+          msg += `${idx + 1}. ${pName} × ${item.quantity} = ${total} TL\n`;
+        });
+        msg += `---------------------------------\n`;
+        msg += `💵 *Subtotal:* ${subtotal} TL\n`;
+        msg += `🚚 *Delivery Fee:* ${DELIVERY_FEE} TL\n`;
+        msg += `💰 *Grand Total:* ${subtotal + DELIVERY_FEE} TL\n`;
+        msg += `---------------------------------\n`;
+        msg += `Please confirm my order. Thank you!`;
+      } else {
+        msg += `🛒 *طلب جديد من متجر طلباتكم (Talabatkom)*\n`;
+        msg += `---------------------------------\n`;
+        msg += `👤 *الاسم:* ${name}\n`;
+        msg += `📱 *الهاتف:* ${phone}\n`;
+        msg += `📍 *العنوان:* ${address}\n`;
+        if (notes) msg += `📝 *ملاحظات:* ${notes}\n`;
+        msg += `---------------------------------\n`;
+        msg += `📦 *تفاصيل المنتجات:*\n`;
+        items.forEach((item, idx) => {
+          const total = item.product.price * item.quantity;
+          subtotal += total;
+          const pName = getProdName(item.product);
+          msg += `${idx + 1}. ${pName} × ${item.quantity} = ${total} TL\n`;
+        });
+        msg += `---------------------------------\n`;
+        msg += `💵 *المجموع الفرعي:* ${subtotal} TL\n`;
+        msg += `🚚 *رسوم التوصيل:* ${DELIVERY_FEE} TL\n`;
+        msg += `💰 *المجموع الإجمالي المطلوب:* ${subtotal + DELIVERY_FEE} TL\n`;
+        msg += `---------------------------------\n`;
+        msg += `يرجى تأكيد استلام الطلب وتجهيزه للتوصيل. شكراً لكم!`;
+      }
+
+      const url = `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`;
+      window.open(url, '_blank');
+    }
+
+
+    window.onload = init;
+  </script>
+</body>
+</html>
