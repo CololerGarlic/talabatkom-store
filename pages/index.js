@@ -31,6 +31,8 @@ export default function Home() {
     return allProducts.filter(product => {
       const matchesSearch = searchQuery === '' || 
         product.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        (product.name_en && product.name_en.toLowerCase().includes(searchQuery.toLowerCase())) ||
+        (product.name_tr && product.name_tr.toLowerCase().includes(searchQuery.toLowerCase())) ||
         product.category.toLowerCase().includes(searchQuery.toLowerCase());
       
       const matchesCategory = !selectedCategorySlug || product.category_slug === selectedCategorySlug;
@@ -44,8 +46,8 @@ export default function Home() {
   return (
     <div className="min-h-screen flex flex-col bg-slate-50 dark:bg-slate-950 text-slate-900 dark:text-slate-100 transition-colors">
       <SEO 
-        title={t.heroTitle} 
-        description={t.heroDesc}
+        title={STORE_CONFIG.storeName} 
+        description={STORE_CONFIG.tagline}
       />
 
       <Navbar
@@ -55,61 +57,7 @@ export default function Home() {
         onSearchChange={setSearchQuery}
       />
 
-      <div 
-        className="relative bg-slate-900 text-white py-8 sm:py-14 px-4 overflow-hidden bg-cover bg-center"
-        style={{ backgroundImage: `url('https://lh3.googleusercontent.com/d/174ifZXjerNNuSd2Ao8z5iiZUWTvqr8fA')` }}
-      >
-        <div className="absolute inset-0 bg-slate-950/80 backdrop-blur-[1px]"></div>
-
-        <div className="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 relative z-10">
-          <div className="flex items-center gap-4 text-center md:ltr:text-left md:rtl:text-right">
-            <div className="w-16 h-16 sm:w-24 sm:h-24 rounded-2xl bg-white p-1.5 shadow-2xl border border-white/80 hidden sm:flex items-center justify-center flex-shrink-0">
-              <img
-                src="https://lh3.googleusercontent.com/d/1mujANyzYrKkKgvH4jg5BU7cOKCzVTybB"
-                alt="Logo"
-                referrerPolicy="no-referrer"
-                className="w-full h-full object-contain"
-              />
-            </div>
-            <div className="space-y-2 sm:space-y-3 max-w-2xl">
-              <div className="inline-flex items-center gap-2 bg-brand-600/80 border border-brand-400/50 px-3.5 py-1 rounded-full text-xs font-bold text-amber-300 shadow-sm">
-                <span>{t.heroBadge}</span>
-              </div>
-              <h1 className="text-2xl sm:text-4xl font-black tracking-tight leading-tight drop-shadow-md">
-                {t.heroTitle}
-              </h1>
-              <p className="text-xs sm:text-base text-slate-200 leading-relaxed drop-shadow-sm">
-                {t.heroDesc}
-              </p>
-              <div className="pt-1 flex flex-wrap items-center justify-center md:ltr:justify-start md:rtl:justify-start gap-2 text-xs">
-                <span className="bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/30 font-semibold shadow-xs">
-                  <span dangerouslySetInnerHTML={{ __html: t.deliveryFeeBadge }} />
-                </span>
-                <span className="bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/30 font-semibold shadow-xs">
-                  {t.codBadge}
-                </span>
-                <span className="bg-white/20 backdrop-blur-md px-3 py-1.5 rounded-lg border border-white/30 font-semibold shadow-xs">
-                  {t.whatsappBadge}
-                </span>
-              </div>
-            </div>
-          </div>
-
-          <div className="flex-shrink-0">
-            <button
-              onClick={() => setIsCartOpen(true)}
-              className="bg-amber-400 hover:bg-amber-300 active:scale-95 text-slate-900 font-extrabold text-xs sm:text-sm px-6 py-3.5 rounded-xl shadow-xl transition-all flex items-center gap-2.5"
-            >
-              <span>🛒</span>
-              <span>{t.viewCart}</span>
-              <span className="bg-slate-900 text-amber-300 px-2 py-0.5 rounded-full text-xs font-bold">
-                {cartTotalCount}
-              </span>
-            </button>
-          </div>
-        </div>
-      </div>
-
+      {/* Categories Navigation Ribbon (Hero background banner removed as requested) */}
       <CategoryRibbon
         categories={categories}
         activeSlug={selectedCategorySlug}
@@ -119,7 +67,7 @@ export default function Home() {
         }}
       />
 
-      <main className="flex-1 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6 w-full">
+      <main className="flex-1 max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 py-4 sm:py-6 w-full">
         {(selectedCategorySlug || searchQuery) ? (
           <div className="space-y-4">
             <div className="flex items-center justify-between pb-3 border-b border-slate-200 dark:border-slate-800">
@@ -130,14 +78,14 @@ export default function Home() {
                     {activeCategory ? activeCategoryName : `"${searchQuery}"`}
                   </h2>
                   <span className="text-xs text-slate-500 dark:text-slate-400">
-                    {filteredProducts.length} items
+                    {filteredProducts.length} {lang === 'ar' ? 'صنف متوفر' : (lang === 'tr' ? 'ürün bulundu' : 'items')}
                   </span>
                 </div>
               </div>
               
               <button
                 onClick={() => { setSelectedCategorySlug(null); setSearchQuery(''); }}
-                className="text-xs font-bold text-brand-700 dark:text-brand-400 hover:text-brand-800 bg-brand-50 dark:bg-brand-950/40 border border-brand-200 dark:border-brand-800 px-3 py-1.5 rounded-lg"
+                className="text-xs font-bold text-brand-700 dark:text-brand-400 hover:text-brand-800 bg-brand-50 dark:bg-brand-950/40 border border-brand-200 dark:border-brand-800 px-3 py-1.5 rounded-lg transition-all"
               >
                 {t.allCategories} &times;
               </button>
@@ -162,7 +110,7 @@ export default function Home() {
             )}
           </div>
         ) : (
-          <div className="space-y-8">
+          <div className="space-y-6 sm:space-y-8">
             {categories.map((cat) => {
               const catItems = allProducts.filter(p => p.category_slug === cat.slug);
               const previewItems = catItems.slice(0, 6);
@@ -175,29 +123,29 @@ export default function Home() {
               return (
                 <section
                   key={cat.slug}
-                  className={`rounded-2xl p-4 sm:p-5 border transition-all ${cardStyle}`}
+                  className={`rounded-2xl p-3 sm:p-5 border transition-all ${cardStyle}`}
                 >
-                  <div className="flex items-center justify-between mb-3.5 pb-2.5 border-b border-slate-100 dark:border-slate-800">
-                    <div className="flex items-center gap-2">
-                      <span className="text-2xl">{cat.icon}</span>
+                  <div className="flex items-center justify-between mb-2.5 sm:mb-3.5 pb-2 border-b border-slate-100 dark:border-slate-800">
+                    <div className="flex items-center gap-1.5 sm:gap-2">
+                      <span className="text-xl sm:text-2xl">{cat.icon}</span>
                       <div>
-                        <h2 className="text-sm sm:text-base font-extrabold text-slate-900 dark:text-white flex items-center gap-1.5">
+                        <h2 className="text-xs sm:text-base font-extrabold text-slate-900 dark:text-white flex items-center gap-1">
                           <span>{displayName}</span>
                           {cat.is_sale && (
-                            <span className="bg-red-600 text-white text-[9px] px-2 py-0.5 rounded-full font-bold">
+                            <span className="bg-red-600 text-white text-[8px] sm:text-[9px] px-1.5 py-0.2 rounded-full font-bold">
                               🔥
                             </span>
                           )}
                         </h2>
-                        <p className="text-[10px] sm:text-xs text-slate-500 dark:text-slate-400">
-                          {catItems.length} items
+                        <p className="text-[9px] sm:text-xs text-slate-500 dark:text-slate-400">
+                          {catItems.length} {lang === 'ar' ? 'صنف' : (lang === 'tr' ? 'ürün' : 'items')}
                         </p>
                       </div>
                     </div>
 
                     <button
                       onClick={() => setSelectedCategorySlug(cat.slug)}
-                      className="text-xs font-bold text-brand-700 dark:text-brand-400 hover:text-brand-800 bg-brand-50 dark:bg-brand-950/40 hover:bg-brand-100 border border-brand-200 dark:border-brand-800 px-3 py-1 rounded-full transition-all flex items-center gap-1"
+                      className="text-[11px] sm:text-xs font-bold text-brand-700 dark:text-brand-400 hover:text-brand-800 bg-brand-50 dark:bg-brand-950/40 hover:bg-brand-100 border border-brand-200 dark:border-brand-800 px-2.5 sm:px-3 py-1 rounded-full transition-all flex items-center gap-1"
                     >
                       <span>{t.browseCategory} ({catItems.length})</span>
                       <span>&rarr;</span>
@@ -221,11 +169,12 @@ export default function Home() {
         )}
       </main>
 
+      {/* Floating Mobile Cart Button */}
       {cartTotalCount > 0 && (
-        <div className="fixed bottom-4 left-4 right-4 z-40 sm:hidden">
+        <div className="fixed bottom-3 left-3 right-3 z-40 sm:hidden">
           <button
             onClick={() => setIsCartOpen(true)}
-            className="w-full bg-[#25D366] text-white font-extrabold text-sm py-3 px-4 rounded-xl shadow-2xl flex items-center justify-between border-2 border-white"
+            className="w-full bg-[#25D366] text-white font-extrabold text-xs sm:text-sm py-3 px-4 rounded-xl shadow-2xl flex items-center justify-between border-2 border-white/80 active:scale-98"
           >
             <span className="flex items-center gap-2">
               <span className="bg-white text-[#25D366] w-6 h-6 rounded-full flex items-center justify-center font-bold text-xs">
@@ -233,7 +182,7 @@ export default function Home() {
               </span>
               <span>{t.mobileOrder}</span>
             </span>
-            <span>WhatsApp &rarr;</span>
+            <span>{t.mobileOrderButton}</span>
           </button>
         </div>
       )}
